@@ -16,11 +16,10 @@ plugins:
     allowSearch: true
     clients:
       - MUSIC
-      - WEB
-      - ANDROID_VR
-      - TVHTML5_SIMPLY_EMBEDDED_PLAYER
+      - WEB_REMIX
     oauth:
       enabled: true
+      refreshToken: "1//05zVuCjENM7puCgYIARAAGAUSNwF-L9IrfKS7fv40hWIQkuXhK4FxTMt3AYI8qrpBUh3d6hDuH2TkEKSlAj22UsVZDh_K2vjyCNA"
 
 logging:
   level:
