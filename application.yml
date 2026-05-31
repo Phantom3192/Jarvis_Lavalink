@@ -1,16 +1,26 @@
 server:
-  port: 13101
+  port: 2333
   address: 0.0.0.0
 
 lavalink:
   server:
     password: "jarvisbot"
     sources:
-      youtube: true
+      youtube: false
       soundcloud: true
-      bandcamp: true
-      twitch: true
       http: true
+
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    clients:
+      - MUSIC
+      - WEB
+      - ANDROID_VR
+      - TVHTML5_SIMPLY_EMBEDDED_PLAYER
+    oauth:
+      enabled: true
 
 logging:
   level:
