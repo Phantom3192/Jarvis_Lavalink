@@ -31,6 +31,8 @@ plugins:
   youtube:
     enabled: true
     allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
     clients:
       - MUSIC
       - WEB
