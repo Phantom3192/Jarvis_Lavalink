@@ -1,0 +1,18 @@
+server:
+  port: 13101
+  address: 0.0.0.0
+
+lavalink:
+  server:
+    password: "jarvisbot"
+    sources:
+      youtube: true
+      soundcloud: true
+      bandcamp: true
+      twitch: true
+      http: true
+
+logging:
+  level:
+    root: INFO
+    lavalink: INFO
