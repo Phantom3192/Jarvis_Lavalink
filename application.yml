@@ -5,24 +5,38 @@ server:
 lavalink:
   server:
     password: "jarvisbot"
+    bufferDurationMs: 1000
+    frameBufferDurationMs: 5000
+    opusEncodingQuality: 10
+    resamplingQuality: HIGH
+    trackStuckThresholdMs: 10000
+    useSeekGhosting: true
     sources:
       youtube: false
       soundcloud: true
       http: true
-  plugins:
-    youtube:
-      enabled: true
-      allowSearch: true
-      clients:
-        - MUSIC
-        - WEB
-      oauth:
-        enabled: true
-        refreshToken: "1//05zVuCjENM7puCgYIARAAGAUSNwF-L9IrfKS7fv40hWIQkuXhK4FxTMt3AYI8qrpBUh3d6hDuH2TkEKSlAj22UsVZDh_K2vjyCNA"
+    filters:
+      volume: true
+      equalizer: true
+      karaoke: true
+      timescale: true
+      tremolo: true
+      vibrato: true
+      distortion: true
+      rotation: true
+      channelMix: true
+      lowPass: true
 
 plugins:
-  lavasrc:
-    enabled: false
+  youtube:
+    enabled: true
+    allowSearch: true
+    clients:
+      - MUSIC
+      - WEB
+    oauth:
+      enabled: true
+      refreshToken: "1//05zVuCjENM7puCgYIARAAGAUSNwF-L9IrfKS7fv40hWIQkuXhK4FxTMt3AYI8qrpBUh3d6hDuH2TkEKSlAj22UsVZDh_K2vjyCNA"
 
 logging:
   level:
