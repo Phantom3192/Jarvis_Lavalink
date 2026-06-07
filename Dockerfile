@@ -1,38 +1,4 @@
 FROM ghcr.io/lavalink-devs/lavalink:4
 USER root
-RUN cat > /opt/Lavalink/application.yml << 'EOF'
-server:
-  port: 2333
-  address: 0.0.0.0
-lavalink:
-  server:
-    password: "jarvisbot"
-    sources:
-      youtube: false
-      soundcloud: true
-      http: true
-  plugins:
-    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
-      repository: "https://maven.lavalink.dev/releases"
-plugins:
-  youtube:
-    enabled: true
-    allowSearch: true
-    clients:
-      - WEBEMBEDDED
-      - TV
-      - TVHTML5EMBEDDED
-      - WEB
-      - ANDROID_VR
-    oauth:
-      enabled: true
-      skipInitialization: true
-      refreshToken: "1//060V0B6e076aSCgYIARAAGAYSNwF-L9Ir_23nphBBxpjdqL9Lgm-yvT50mijwfvN6lTaRoddlYzt3p4jV5A99e4BxBCUmRgMmMiM"
-    cipherSolver:
-      remoteCipherUrl: "http://noble-serenity.railway.internal:8080"
-logging:
-  level:
-    root: INFO
-    lavalink: INFO
-EOF
+RUN printf 'server:\n  port: 2333\n  address: 0.0.0.0\nlavalink:\n  server:\n    password: "jarvisbot"\n    sources:\n      youtube: false\n      soundcloud: true\n      http: true\n  plugins:\n    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"\n      repository: "https://maven.lavalink.dev/releases"\nplugins:\n  youtube:\n    enabled: true\n    allowSearch: true\n    clients:\n      - WEBEMBEDDED\n      - TV\n      - TVHTML5EMBEDDED\n      - WEB\n      - ANDROID_VR\n    oauth:\n      enabled: true\n      skipInitialization: true\n      refreshToken: "1//060V0B6e076aSCgYIARAAGAYSNwF-L9Ir_23nphBBxpjdqL9Lgm-yvT50mijwfvN6lTaRoddlYzt3p4jV5A99e4BxBCUmRgMmMiM"\n    cipherSolver:\n      remoteCipherUrl: "http://noble-serenity.railway.internal:8080"\nlogging:\n  level:\n    root: INFO\n    lavalink: INFO\n' > /opt/Lavalink/application.yml
 WORKDIR /opt/Lavalink
