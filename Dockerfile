@@ -21,12 +21,8 @@ plugins:\n\
     enabled: true\n\
     allowSearch: true\n\
     clients:\n\
-      - TV\n\
-      - ANDROID\n\
-      - IOS\n\
-    oauth:\n\
-      enabled: true\n\
-      refreshToken: "YOUR_REFRESH_TOKEN_HERE"\n\
+      - TVHTML5_SIMPLY\n\
+      - WEB\n\
 logging:\n\
   level:\n\
     root: INFO\n\
