@@ -32,7 +32,6 @@ plugins:
     oauth:
       enabled: true
       skipInitialization: false
-      refreshToken: "1//06mYlPcW9wa3DCgYIARAAGAYSNwF-L9IrHHMj_DZZL7Hg_yl3FZvRlCV-8Yy4LKs9SvHT1FNRA0pPzcUmiYc2ElutUXDekfTay3s"
 
 logging:
   level:
