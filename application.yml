@@ -15,7 +15,7 @@ lavalink:
     playerUpdateInterval: 5
     gc-warnings: true
   plugins:
-    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.3"
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
       repository: "https://maven.lavalink.dev/releases"
       snapshot: false
 
