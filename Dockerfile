@@ -1,5 +1,6 @@
 FROM ghcr.io/lavalink-devs/lavalink:4
 
+ARG CACHE_BUST=1
 COPY application.yml /opt/Lavalink/application.yml
 
 WORKDIR /opt/Lavalink
