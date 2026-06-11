@@ -1,24 +1,64 @@
 server:
   port: 2333
   address: 0.0.0.0
+
 lavalink:
   server:
     password: "jarvisbot"
     sources:
-      youtube: false
+      youtube: true
       soundcloud: true
-      http: true
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    youtubePlaylistLoadLimit: 6
+    playerUpdateInterval: 5
+    youtubeSearchEnabled: true
+    soundcloudSearchEnabled: true
+    gc-warnings: true
+
 plugins:
   youtube:
     enabled: true
     allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
     clients:
       - ANDROID_VR
       - TVHTML5_SIMPLY
       - IOS
+      - WEB
     oauth:
-      enabled: false
+      enabled: true
+      refreshToken: "1//060V0B6e076aSCgYIARAAGAYSNwF-L9Ir_23nphBBxpjdqL9Lgm-yvT50mijwfvN6lTaRoddlYzt3p4jV5A99e4BxBCUmRgMmMiM"
+      skipInitialization: true
+
 logging:
   level:
     root: INFO
     lavalink: INFO
+    dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO  
+    
+# server:
+#   port: 2333
+#   address: 0.0.0.0
+# lavalink:
+#   server:
+#     password: "jarvisbot"
+#     sources:
+#       youtube: false
+#       soundcloud: true
+#       http: true
+# plugins:
+#   youtube:
+#     enabled: true
+#     allowSearch: true
+#     clients:
+#       - ANDROID_VR
+#       - TVHTML5_SIMPLY
+#       - IOS
+#     oauth:
+#       enabled: false
+# logging:
+#   level:
+#     root: INFO
+#     lavalink: INFO
