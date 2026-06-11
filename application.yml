@@ -8,6 +8,7 @@ lavalink:
     sources:
       youtube: false
       soundcloud: true
+      http: true
     bufferDurationMs: 400
     frameBufferDurationMs: 5000
     youtubePlaylistLoadLimit: 6
@@ -30,11 +31,9 @@ plugins:
       - ANDROID_VR
       - TVHTML5_SIMPLY
       - IOS
-      - WEB
     oauth:
-      enabled: true
+      enabled: false
       refreshToken: "1//060V0B6e076aSCgYIARAAGAYSNwF-L9Ir_23nphBBxpjdqL9Lgm-yvT50mijwfvN6lTaRoddlYzt3p4jV5A99e4BxBCUmRgMmMiM"
-      skipInitialization: true
 
 logging:
   level:
