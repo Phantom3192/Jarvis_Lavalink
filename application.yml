@@ -31,7 +31,7 @@ plugins:
       - ANDROID_VR
     oauth:
       enabled: true
-      skipInitialization: false
+      skipInitialization: true
 
 logging:
   level:
