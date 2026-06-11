@@ -1,10 +1,5 @@
 FROM ghcr.io/lavalink-devs/lavalink:4
 
-# ADD THIS - Download the YouTube plugin
-RUN mkdir -p /opt/Lavalink/plugins && \
-    wget -O /opt/Lavalink/plugins/youtube-plugin-4.2.2.jar \
-    https://github.com/lavalink-devs/youtube-source/releases/download/v4.2.2/youtube-plugin-4.2.2.jar
-
 COPY application.yml /opt/Lavalink/application.yml
 
 WORKDIR /opt/Lavalink
