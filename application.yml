@@ -6,7 +6,7 @@ lavalink:
   server:
     password: "jarvisbot"
     sources:
-      youtube: true
+      youtube: false
       soundcloud: true
     bufferDurationMs: 400
     frameBufferDurationMs: 5000
