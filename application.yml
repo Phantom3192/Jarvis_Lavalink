@@ -32,7 +32,8 @@ plugins:
       - TVHTML5_SIMPLY
       - IOS
     oauth:
-      enabled: true
+      enabled: false
+      refreshToken: "1//06nJ229biuGDSCgYIARAAGAYSNwF-L9IrbZ_c00fY6VUteSUUXRynfYGwzknZx1Bfsa2VPhLdrI5yZIm8LE8xVsb4sLqH6AlhGuQ"
       
 logging:
   level:
