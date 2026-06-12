@@ -37,7 +37,7 @@ plugins:
     oauth:
       enabled: true
       skipInitialization: false
-      # refreshToken: ${YOUTUBE_REFRESH_TOKEN:}
+      refreshToken: ${YOUTUBE_REFRESH_TOKEN:}
 
   lavasrc:
     providers:
