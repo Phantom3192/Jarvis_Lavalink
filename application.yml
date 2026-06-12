@@ -18,6 +18,9 @@ lavalink:
     - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
       repository: "https://maven.lavalink.dev/releases"
       snapshot: false
+    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.3.0"
+      repository: "https://maven.lavalink.dev/releases"
+      snapshot: false
 
 plugins:
   youtube:
@@ -26,19 +29,42 @@ plugins:
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
     clients:
-      - ANDROID_TESTSUITE  
+      - ANDROID_TESTSUITE
+      - MUSIC
       - TVHTML5_SIMPLY
-      - WEB               
       - ANDROID_VR
-
+      - WEB
     oauth:
       enabled: true
       skipInitialization: true
-      refreshToken: "1//061VBcAISiMV6CgYIARAAGAYSNwF-L9Irw5D5b74QPCQDoQ8fFcYr66xWuUNox63tEu5xg8CRf5Oru8dtUWAhdteaAAnkMH-rchM"
+      refreshToken: ${YOUTUBE_REFRESH_TOKEN:}
+
+  lavasrc:
+    providers:
+      - "dzisrc:%ISRC%"
+      - "dzsearch:%QUERY%"
+      - "ytsearch:%QUERY%"
+      - "scsearch:%QUERY%"
+    sources:
+      spotify: true
+      appleMusic: true
+      deezer: true
+      yandexMusic: false
+      flowerytts: false
+    spotify:
+      clientId: ${SPOTIFY_CLIENT_ID:}
+      clientSecret: ${SPOTIFY_CLIENT_SECRET:}
+      countryCode: "US"
+      playlistLoadLimit: 6
+      albumLoadLimit: 6
+    appleMusic:
+      countryCode: "US"
+    deezer:
+      masterDecryptionKey: ${DEEZER_MASTER_KEY:}
 
 logging:
   level:
     root: INFO
-    lavalink: DEBUG
-    dev.lavalink.youtube: DEBUG
+    lavalink: INFO
+    dev.lavalink.youtube: INFO
     dev.lavalink.youtube.http.YoutubeOauth2Handler: DEBUG
