@@ -9,9 +9,9 @@ lavalink:
       youtube: false
       soundcloud: true
       http: true
-    bufferDurationMs: 400
-    frameBufferDurationMs: 5000
-    youtubePlaylistLoadLimit: 6
+    bufferDurationMs: 200
+    frameBufferDurationMs: 1000
+    youtubePlaylistLoadLimit: 4
     playerUpdateInterval: 5
     gc-warnings: true
   plugins:
@@ -31,14 +31,11 @@ plugins:
     clients:
       - MUSIC
       - TVHTML5
-      - TVHTML5_SIMPLY
-      - ANDROID_VR
       - WEB
     oauth:
       enabled: true
       skipInitialization: true
       refreshToken: ${YOUTUBE_REFRESH_TOKEN:}
-
   lavasrc:
     providers:
       - "ytsearch:%QUERY%"
@@ -53,14 +50,14 @@ plugins:
       clientId: ${SPOTIFY_CLIENT_ID:}
       clientSecret: ${SPOTIFY_CLIENT_SECRET:}
       countryCode: "IN"
-      playlistLoadLimit: 6
-      albumLoadLimit: 6
+      playlistLoadLimit: 4
+      albumLoadLimit: 4
     appleMusic:
       countryCode: "IN"
 
 logging:
   level:
-    root: INFO
+    root: WARN
     lavalink: INFO
-    dev.lavalink.youtube: INFO
-    dev.lavalink.youtube.http.YoutubeOauth2Handler: DEBUG
+    dev.lavalink.youtube: WARN
+    dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
