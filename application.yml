@@ -35,8 +35,8 @@ plugins:
       - WEB    
     oauth:
       enabled: true
-      skipInitialization: true
-      refreshToken: ${YOUTUBE_REFRESH_TOKEN:}
+      skipInitialization: false
+      # refreshToken: ${YOUTUBE_REFRESH_TOKEN:}
   lavasrc:
     providers:
       - "ytsearch:%QUERY%"
