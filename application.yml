@@ -29,9 +29,10 @@ plugins:
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
     clients:
-      - TVHTML5_SIMPLY 
-      - WEB  
-      - ANDROID_VR  
+      - TV
+      - ANDROID_TESTSUITE  
+      - MUSIC                  
+      - WEB    
     oauth:
       enabled: true
       skipInitialization: true
