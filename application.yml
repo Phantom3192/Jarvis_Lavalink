@@ -29,14 +29,14 @@ plugins:
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
     clients:
-      - MUSIC
-      - ANDROID_TESTSUITE
-      - TVHTML5
+      - TV     
+      - TVHTML5_SIMPLY 
+      - ANDROID_VR  
+      - WEB       
     oauth:
       enabled: true
-      skipInitialization: false  
+      skipInitialization: true
       refreshToken: ${YOUTUBE_REFRESH_TOKEN:}
-      
   lavasrc:
     providers:
       - "ytsearch:%QUERY%"
