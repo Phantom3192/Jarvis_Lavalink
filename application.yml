@@ -30,12 +30,13 @@ plugins:
     allowDirectPlaylistIds: true
     clients:
       - MUSIC
+      - ANDROID_TESTSUITE
       - TVHTML5
-      - WEB
     oauth:
       enabled: true
-      skipInitialization: true
+      skipInitialization: false  
       refreshToken: ${YOUTUBE_REFRESH_TOKEN:}
+      
   lavasrc:
     providers:
       - "ytsearch:%QUERY%"
