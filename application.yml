@@ -6,59 +6,8 @@ lavalink:
   server:
     password: "jarvisbot"
     sources:
-      youtube: false
-      soundcloud: true
+      youtube: false      # disabled — let public node handle it
+      soundcloud: true    # ← this is all you need
       http: true
-    bufferDurationMs: 200
-    frameBufferDurationMs: 1000
-    youtubePlaylistLoadLimit: 4
-    playerUpdateInterval: 5
-    gc-warnings: true
-  plugins:
-    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
-      repository: "https://maven.lavalink.dev/releases"
-      snapshot: false
-    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
-      repository: "https://maven.lavalink.dev/releases"
-      snapshot: false
 
-plugins:
-  youtube:
-    enabled: true
-    allowSearch: true
-    allowDirectVideoIds: true
-    allowDirectPlaylistIds: true
-    clients:
-      - TV
-      - ANDROID_TESTSUITE  
-      - MUSIC                  
-      - WEB    
-    oauth:
-      enabled: true
-      skipInitialization: true
-      refreshToken: ${YOUTUBE_REFRESH_TOKEN:}
-  lavasrc:
-    providers:
-      - "ytsearch:%QUERY%"
-      - "scsearch:%QUERY%"
-    sources:
-      spotify: true
-      appleMusic: true
-      deezer: false
-      yandexMusic: false
-      flowerytts: false
-    spotify:
-      clientId: ${SPOTIFY_CLIENT_ID:}
-      clientSecret: ${SPOTIFY_CLIENT_SECRET:}
-      countryCode: "IN"
-      playlistLoadLimit: 4
-      albumLoadLimit: 4
-    appleMusic:
-      countryCode: "IN"
-
-logging:
-  level:
-    root: INFO
-    lavalink: INFO
-    dev.lavalink.youtube: WARN
-    dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
+plugins: []   # no plugins needed for SC
