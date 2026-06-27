@@ -4,7 +4,19 @@ set -e
 # Railway sets PORT automatically; fallback to 2333 for other hosts
 SERVER_PORT="${PORT:-2333}"
 
-# ── Write application.yml ─────────────────────────────────────────────────────
+# Build OAuth section — strip whitespace from token to avoid corruption
+if [ -n "$LAVALINK_YT_REFRESH_TOKEN" ]; then
+  CLEAN_TOKEN="$(echo "$LAVALINK_YT_REFRESH_TOKEN" | tr -d '[:space:]')"
+  OAUTH_BLOCK="    oauth:
+      enabled: true
+      refreshToken: \"$CLEAN_TOKEN\""
+  OAUTH_STATUS="ENABLED (refresh token set)"
+else
+  OAUTH_BLOCK="    oauth:
+      enabled: true"
+  OAUTH_STATUS="ENABLED — waiting for device login (watch logs for a Google URL)"
+fi
+
 cat > /opt/Lavalink/application.yml << YAML
 server:
   port: $SERVER_PORT
@@ -36,8 +48,7 @@ plugins:
       - WEB
       - WEBEMBEDDED
       - TV
-    oauth:
-      enabled: false
+$OAUTH_BLOCK
 
 logging:
   level:
@@ -49,6 +60,7 @@ YAML
 
 echo "✅ Lavalink: application.yml written (port $SERVER_PORT)"
 echo "   Password: ${LAVALINK_PASSWORD:+SET (custom)}"
+echo "   YouTube OAuth: $OAUTH_STATUS"
 echo ""
 
 exec java \
