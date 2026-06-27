@@ -8,8 +8,6 @@ RUN apt-get update && apt-get install -y python3 ffmpeg curl \
     && chmod +x /usr/local/bin/yt-dlp \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY cookies.txt /opt/Lavalink/cookies.txt
-
 USER lavalink
 
 WORKDIR /opt/Lavalink
