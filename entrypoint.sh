@@ -45,7 +45,7 @@ plugins:
       path: "yt-dlp"
       searchLimit: 10
       customLoadArgs: ["-q", "--no-warnings", "--flat-playlist", "--skip-download", "-J", "--cookies", "/opt/Lavalink/cookies.txt"]
-      customPlaybackArgs: ["-q", "--no-warnings", "-f", "bestaudio/best", "-J", "--cookies", "/opt/Lavalink/cookies.txt"]
+      customPlaybackArgs: ["-q", "--no-warnings", "-f", "bestaudio[ext=webm]/bestaudio[ext=m4a]/bestaudio/best[ext=webm]/best[ext=m4a]/best", "--extractor-args", "youtube:formats=incomplete", "-J", "--cookies", "/opt/Lavalink/cookies.txt"]
 
 logging:
   level:
