@@ -3,6 +3,14 @@ set -e
 
 SERVER_PORT="${PORT:-2333}"
 
+# Write YouTube cookies from env var to file
+if [ -n "$YOUTUBE_COOKIES" ]; then
+  echo "$YOUTUBE_COOKIES" > /opt/Lavalink/cookies.txt
+  echo "✅ cookies: written successfully"
+else
+  echo "⚠️  cookies: YOUTUBE_COOKIES not set, yt-dlp may get bot-detected"
+fi
+
 cat > /opt/Lavalink/application.yml << YAML
 server:
   port: $SERVER_PORT
@@ -13,7 +21,7 @@ lavalink:
     password: "${LAVALINK_PASSWORD:-jarvisbot}"
     sources:
       youtube: false
-      soundcloud: true
+      soundcloud: false
       http: true
       twitch: false
       vimeo: false
@@ -36,6 +44,8 @@ plugins:
     ytdlp:
       path: "yt-dlp"
       searchLimit: 10
+      customLoadArgs: ["-q", "--no-warnings", "--flat-playlist", "--skip-download", "-J", "--cookies", "/opt/Lavalink/cookies.txt"]
+      customPlaybackArgs: ["-q", "--no-warnings", "-f", "bestaudio", "-J", "--cookies", "/opt/Lavalink/cookies.txt"]
 
 logging:
   level:
@@ -44,13 +54,13 @@ logging:
 YAML
 
 echo "✅ Lavalink ready on port $SERVER_PORT"
-echo "   yt-dlp: $(yt-dlp --version 2>/dev/null || echo 'NOT FOUND - check Dockerfile')"
+echo "   yt-dlp: $(yt-dlp --version 2>/dev/null || echo 'NOT FOUND')"
+
 unset _JAVA_OPTIONS
 exec java \
-  -Xmx${LAVALINK_HEAP:-512m} \
-  -Xms128m \
+  -Xmx${LAVALINK_HEAP:-450m} \
+  -Xms100m \
   -XX:+UseG1GC \
   -XX:MaxGCPauseMillis=50 \
-  -XX:MaxMetaspaceSize=128m \
-  -XX:+UseStringDeduplication \
+  -XX:MaxMetaspaceSize=100m \
   -jar /opt/Lavalink/Lavalink.jar
