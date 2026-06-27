@@ -1,0 +1,38 @@
+server:
+  port: 8000
+  address: 0.0.0.0
+
+lavalink:
+  server:
+    password: "jarvisbot"
+    sources:
+      youtube: false
+      soundcloud: false
+      http: true
+      twitch: false
+      vimeo: false
+      nico: false
+  plugins:
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
+      repository: "https://maven.lavalink.dev/releases"
+
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
+    clients:
+      - MUSIC
+      - WEB
+      - WEBEMBEDDED
+      - TV
+    oauth:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    lavalink: INFO
+    dev.lavalink.youtube: INFO
+    dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
