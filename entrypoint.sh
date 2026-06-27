@@ -3,13 +3,20 @@ set -e
 
 SERVER_PORT="${PORT:-2333}"
 
-# Write YouTube cookies from env var to file
+# Write YouTube cookies and yt-dlp config
 if [ -n "$YOUTUBE_COOKIES" ]; then
   echo "$YOUTUBE_COOKIES" | base64 -d > /opt/Lavalink/cookies.txt
   echo "✅ cookies: written successfully"
 else
-  echo "⚠️  cookies: YOUTUBE_COOKIES not set, yt-dlp may get bot-detected"
+  echo "⚠️  cookies: YOUTUBE_COOKIES not set"
 fi
+
+# yt-dlp global config
+mkdir -p /home/lavalink/.config/yt-dlp
+cat > /home/lavalink/.config/yt-dlp/config << 'YTDLPCONF'
+--no-check-certificates
+YTDLPCONF
+echo "✅ yt-dlp config written"
 
 cat > /opt/Lavalink/application.yml << YAML
 server:
@@ -44,8 +51,8 @@ plugins:
     ytdlp:
       path: "yt-dlp"
       searchLimit: 10
-      customLoadArgs: ["-q", "--no-warnings", "--flat-playlist", "--skip-download", "-J", "--cookies", "/opt/Lavalink/cookies.txt"]
-      customPlaybackArgs: ["-q", "--no-warnings", "-f", "bestaudio[ext=webm]/bestaudio[ext=m4a]/bestaudio/best[ext=webm]/best[ext=m4a]/best", "--extractor-args", "youtube:formats=incomplete", "-J", "--cookies", "/opt/Lavalink/cookies.txt"]
+      customLoadArgs: ["-q", "--no-warnings", "--flat-playlist", "--skip-download", "-J", "--cookies", "/opt/Lavalink/cookies.txt", "--extractor-args", "youtube:player_client=web,default;formats=incomplete,missing_pot"]
+      customPlaybackArgs: ["-q", "--no-warnings", "-f", "bestaudio/best", "-J", "--cookies", "/opt/Lavalink/cookies.txt", "--extractor-args", "youtube:player_client=web,default;formats=incomplete,missing_pot"]
 
 logging:
   level:
