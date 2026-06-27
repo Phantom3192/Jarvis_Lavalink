@@ -45,4 +45,12 @@ YAML
 
 echo "✅ Lavalink ready on port $SERVER_PORT"
 echo "   yt-dlp: $(yt-dlp --version 2>/dev/null || echo 'NOT FOUND - check Dockerfile')"
-exec java -Xmx${LAVALINK_HEAP:-400m} -XX:+UseG1GC -jar /opt/Lavalink/Lavalink.jar
+nset _JAVA_OPTIONS
+exec java \
+  -Xmx${LAVALINK_HEAP:-512m} \
+  -Xms128m \
+  -XX:+UseG1GC \
+  -XX:MaxGCPauseMillis=50 \
+  -XX:MaxMetaspaceSize=128m \
+  -XX:+UseStringDeduplication \
+  -jar /opt/Lavalink/Lavalink.jar
