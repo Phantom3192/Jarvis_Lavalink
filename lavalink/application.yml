@@ -28,7 +28,7 @@ plugins:
       - WEBEMBEDDED
       - TV
     oauth:
-      enabled: false
+      enabled: true
 
 logging:
   level:
