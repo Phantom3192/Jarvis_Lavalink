@@ -58,9 +58,10 @@ echo "   yt-dlp: $(yt-dlp --version 2>/dev/null || echo 'NOT FOUND')"
 
 unset _JAVA_OPTIONS
 exec java \
-  -Xmx${LAVALINK_HEAP:-450m} \
-  -Xms100m \
+  -Xmx256m \
+  -Xms64m \
   -XX:+UseG1GC \
   -XX:MaxGCPauseMillis=50 \
-  -XX:MaxMetaspaceSize=100m \
+  -XX:MaxMetaspaceSize=80m \
+  -XX:+UseStringDeduplication \
   -jar /opt/Lavalink/Lavalink.jar
