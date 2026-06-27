@@ -45,7 +45,7 @@ YAML
 
 echo "✅ Lavalink ready on port $SERVER_PORT"
 echo "   yt-dlp: $(yt-dlp --version 2>/dev/null || echo 'NOT FOUND - check Dockerfile')"
-nset _JAVA_OPTIONS
+unset _JAVA_OPTIONS
 exec java \
   -Xmx${LAVALINK_HEAP:-512m} \
   -Xms128m \
