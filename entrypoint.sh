@@ -3,7 +3,7 @@ set -e
 
 SERVER_PORT="${PORT:-2333}"
 
-# Write YouTube cookies and yt-dlp config
+# Write YouTube cookies from env var to file
 if [ -n "$YOUTUBE_COOKIES" ]; then
   echo "$YOUTUBE_COOKIES" | base64 -d > /opt/Lavalink/cookies.txt
   echo "✅ cookies: written successfully"
@@ -11,12 +11,15 @@ else
   echo "⚠️  cookies: YOUTUBE_COOKIES not set"
 fi
 
-# yt-dlp global config
-mkdir -p /home/lavalink/.config/yt-dlp
-cat > /home/lavalink/.config/yt-dlp/config << 'YTDLPCONF'
+# Write yt-dlp config to writable directory
+mkdir -p /opt/Lavalink/yt-dlp-config
+cat > /opt/Lavalink/yt-dlp-config/config << 'YTDLPCONF'
 --no-check-certificates
 YTDLPCONF
 echo "✅ yt-dlp config written"
+
+# Tell yt-dlp to use our config directory
+export XDG_CONFIG_HOME=/opt/Lavalink/yt-dlp-config
 
 cat > /opt/Lavalink/application.yml << YAML
 server:
@@ -63,6 +66,7 @@ YAML
 echo "✅ Lavalink ready on port $SERVER_PORT"
 echo "   yt-dlp: $(yt-dlp --version 2>/dev/null || echo 'NOT FOUND')"
 
+export XDG_CONFIG_HOME=/opt/Lavalink/yt-dlp-config
 unset _JAVA_OPTIONS
 exec java \
   -Xmx256m \
