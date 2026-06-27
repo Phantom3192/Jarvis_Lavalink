@@ -4,7 +4,7 @@ set -e
 LAVALINK_DIR="$(cd "$(dirname "$0")" && pwd)/lavalink"
 mkdir -p "$LAVALINK_DIR"
 
-PORT="${LAVALINK_PORT:-8000}"
+PORT="${LAVALINK_PORT:-5000}"
 
 cat > "$LAVALINK_DIR/application.yml" << YAML
 server:
