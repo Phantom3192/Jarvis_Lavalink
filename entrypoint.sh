@@ -10,7 +10,7 @@ if [ -n "$LAVALINK_YT_REFRESH_TOKEN" ]; then
       refreshToken: \"$CLEAN_TOKEN\""
 else
   OAUTH_BLOCK="    oauth:
-      enabled: true"
+      enabled: false"
 fi
 
 cat > /opt/Lavalink/application.yml << YAML
@@ -22,7 +22,7 @@ lavalink:
     password: "${LAVALINK_PASSWORD:-jarvisbot}"
     sources:
       youtube: false
-      soundcloud: false
+      soundcloud: true
       http: true
   plugins:
     - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
@@ -34,11 +34,9 @@ plugins:
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
     clients:
+      - TVHTML5SIMPLY
       - MUSIC
-      - ANDROID_MUSIC
-      - WEB
-      - WEBEMBEDDED
-      - TV
+      - IOS
 $OAUTH_BLOCK
 logging:
   level:
