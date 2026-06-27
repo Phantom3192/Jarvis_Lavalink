@@ -24,6 +24,9 @@ lavalink:
       youtube: false
       soundcloud: true
       http: true
+      twitch: false
+      vimeo: false
+      nico: false
   plugins:
     - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
       repository: "https://maven.lavalink.dev/releases"
@@ -34,7 +37,7 @@ plugins:
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
     clients:
-      - TVHTML5SIMPLY
+      - TVHTML5_SIMPLY
       - MUSIC
       - IOS
 $OAUTH_BLOCK
@@ -42,7 +45,10 @@ logging:
   level:
     root: INFO
     lavalink: INFO
+    dev.lavalink.youtube: INFO
+    dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
 YAML
 
-echo "Lavalink ready on port $SERVER_PORT"
+echo "✅ Lavalink: application.yml written (port $SERVER_PORT)"
+echo "   Password: ${LAVALINK_PASSWORD:+SET (custom)}${LAVALINK_PASSWORD:-DEFAULT (jarvisbot)}"
 exec java -Xmx${LAVALINK_HEAP:-400m} -XX:+UseG1GC -jar /opt/Lavalink/Lavalink.jar
