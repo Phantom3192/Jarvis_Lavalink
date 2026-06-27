@@ -6,8 +6,22 @@ lavalink:
   server:
     password: "jarvisbot"
     sources:
-      youtube: false      # disabled — let public node handle it
-      soundcloud: true    # ← this is all you need
+      youtube: false
+      soundcloud: true
       http: true
 
-plugins: []   # no plugins needed for SC
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    clients:
+      - TVHTML5SIMPLY
+      - MUSIC
+      - WEB
+    oauth:
+      enabled: false
+
+logging:
+  level:
+    root: INFO
+    lavalink: INFO
