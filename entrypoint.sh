@@ -5,7 +5,7 @@ SERVER_PORT="${PORT:-2333}"
 
 # Write YouTube cookies from env var to file
 if [ -n "$YOUTUBE_COOKIES" ]; then
-  echo "$YOUTUBE_COOKIES" > /opt/Lavalink/cookies.txt
+  echo "$YOUTUBE_COOKIES" | base64 -d > /opt/Lavalink/cookies.txt
   echo "✅ cookies: written successfully"
 else
   echo "⚠️  cookies: YOUTUBE_COOKIES not set, yt-dlp may get bot-detected"
