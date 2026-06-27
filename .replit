@@ -37,3 +37,8 @@ externalPort = 8000
 [deployment]
 deploymentTarget = "vm"
 run = ["bash", "start.sh"]
+
+[userenv]
+
+[userenv.shared]
+LAVALINK_YT_OAUTH_READY = "true"
