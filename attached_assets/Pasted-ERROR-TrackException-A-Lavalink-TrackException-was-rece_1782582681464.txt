@@ -1,0 +1,78 @@
+ERROR:TrackException:A Lavalink TrackException was received on Node(identifier=jarvis-lavalink, uri=https://2db830cc-6351-4584-bc10-421d57e7b846-00-2yigqhz2anami.pike.replit.dev:443, status=NodeStatus.CONNECTED, players=1) for player <wavelink.player.Player object at 0x7f188cba9f40>: (yts.version: 1.18.1) All clients failed to load the item.
+Client [WEB] failed: This video requires login.This video requires login.
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:94)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131)
+Client [WEB_EMBEDDED_PLAYER] failed: Video player configuration errorVideo player configuration error
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:64)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131)
+Client [WEB_EMBEDDED_PLAYER] failed: Video player configuration errorVideo player configuration error
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:94)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131), caused by: dev.lavalink.youtube.AllClientsFailedException: (yts.version: 1.18.1) All clients failed to load the item.
+Client [WEB] failed: This video requires login.This video requires login.
+Client [TVHTML5] failed: This video requires login.This video requires login.
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:94)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:64)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131)
+Client [TVHTML5] failed: This video requires login.This video requires login.
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:94)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131), with severity: suspicious
+⚠️  YouTube blocked 'David Kushner - Daylight (Official Music Video)' — retrying on SoundCloud...
+❌ No SoundCloud fallback found for 'David Kushner David Kushner - Daylight (Official Music Video)'
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131)
+ERROR:TrackException:A Lavalink TrackException was received on Node(identifier=jarvis-lavalink, uri=https://2db830cc-6351-4584-bc10-421d57e7b846-00-2yigqhz2anami.pike.replit.dev:443, status=NodeStatus.CONNECTED, players=1) for player <wavelink.player.Player object at 0x7f188cba9f40>: (yts.version: 1.18.1) All clients failed to load the item.
+Client [WEB] failed: This video requires login.This video requires login.
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:94)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131)
+Client [WEB_EMBEDDED_PLAYER] failed: Video player configuration errorVideo player configuration error
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:64)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+Client [TVHTML5] failed: This video requires login.This video requires login.
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:94)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131), caused by: dev.lavalink.youtube.AllClientsFailedException: (yts.version: 1.18.1) All clients failed to load the item.
+Client [WEB] failed: This video requires login.This video requires login.
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:94)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131)
+Client [WEB_EMBEDDED_PLAYER] failed: Video player configuration errorVideo player configuration error
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:64)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131)
+Client [TVHTML5] failed: This video requires login.This video requires login.
+	at dev.lavalink.youtube.clients.skeleton.Client.getPlayabilityStatus(Client.java:94)
+	at dev.lavalink.youtube.clients.skeleton.NonMusicClient.loadTrackInfoFromInnertube(NonMusicClient.java:163)
+	at dev.lavalink.youtube.clients.skeleton.StreamingNonMusicClient.loadFormats(StreamingNonMusicClient.java:35)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:194)
+	at dev.lavalink.youtube.track.YoutubeAudioTrack.processWithClient(YoutubeAudioTrack.java:131), with severity: suspicious
+⚠️  YouTube blocked 'Ricky Montgomery - Line Without a Hook (Official Lyric Video)' — retrying on SoundCloud...
+❌ No SoundCloud fallback found for 'Ricky Montgomery Ricky Montgomery - Line Without a Hook (Official Lyric Video)'
