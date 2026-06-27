@@ -37,14 +37,7 @@ plugins:
       - WEBEMBEDDED
       - TV
     oauth:
-      enabled: true
-YAML
-
-if [ -n "$LAVALINK_YT_REFRESH_TOKEN" ]; then
-  echo "      refreshToken: \"$LAVALINK_YT_REFRESH_TOKEN\"" >> "$LAVALINK_DIR/application.yml"
-fi
-
-cat >> "$LAVALINK_DIR/application.yml" << YAML
+      enabled: false
 
 logging:
   level:
@@ -55,7 +48,8 @@ logging:
 YAML
 
 echo "Lavalink: application.yml written (port $PORT)"
-echo "   OAuth refresh token: $([ -n "$LAVALINK_YT_REFRESH_TOKEN" ] && echo "SET" || echo "NOT SET — watch logs for a login URL")"
+echo "   Password: ${LAVALINK_PASSWORD:+SET (custom)}"
+echo "   YouTube OAuth: disabled (set LAVALINK_YT_OAUTH=true to enable once you have a valid token)"
 echo ""
 
 cd "$LAVALINK_DIR"
