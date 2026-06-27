@@ -1,27 +1,22 @@
 #!/bin/sh
 set -e
 
-# Railway sets PORT automatically; fallback to 2333 for other hosts
 SERVER_PORT="${PORT:-2333}"
 
-# Build OAuth section — strip whitespace from token to avoid corruption
 if [ -n "$LAVALINK_YT_REFRESH_TOKEN" ]; then
   CLEAN_TOKEN="$(echo "$LAVALINK_YT_REFRESH_TOKEN" | tr -d '[:space:]')"
   OAUTH_BLOCK="    oauth:
       enabled: true
       refreshToken: \"$CLEAN_TOKEN\""
-  OAUTH_STATUS="ENABLED (refresh token set)"
 else
   OAUTH_BLOCK="    oauth:
       enabled: true"
-  OAUTH_STATUS="ENABLED — waiting for device login (watch logs for a Google URL)"
 fi
 
 cat > /opt/Lavalink/application.yml << YAML
 server:
   port: $SERVER_PORT
   address: 0.0.0.0
-
 lavalink:
   server:
     password: "${LAVALINK_PASSWORD:-jarvisbot}"
@@ -29,13 +24,9 @@ lavalink:
       youtube: false
       soundcloud: false
       http: true
-      twitch: false
-      vimeo: false
-      nico: false
   plugins:
     - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
       repository: "https://maven.lavalink.dev/releases"
-
 plugins:
   youtube:
     enabled: true
@@ -49,22 +40,11 @@ plugins:
       - WEBEMBEDDED
       - TV
 $OAUTH_BLOCK
-
 logging:
   level:
     root: INFO
     lavalink: INFO
-    dev.lavalink.youtube: INFO
-    dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
 YAML
 
-echo "✅ Lavalink: application.yml written (port $SERVER_PORT)"
-echo "   Password: ${LAVALINK_PASSWORD:+SET (custom)}"
-echo "   YouTube OAuth: $OAUTH_STATUS"
-echo ""
-
-exec java \
-  -Xmx${LAVALINK_HEAP:-400m} \
-  -XX:+UseG1GC \
-  -XX:MaxGCPauseMillis=50 \
-  -jar /opt/Lavalink/Lavalink.jar
+echo "Lavalink ready on port $SERVER_PORT"
+exec java -Xmx${LAVALINK_HEAP:-400m} -XX:+UseG1GC -jar /opt/Lavalink/Lavalink.jar
