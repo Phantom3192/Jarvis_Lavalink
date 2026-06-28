@@ -18,26 +18,18 @@ lavalink:
       twitch: false
       vimeo: false
       nico: false
-    bufferDurationMs: 225
+    bufferDurationMs: 400
     frameBufferDurationMs: 5000
     opusEncodingQuality: 5
-    resamplingQuality: MEDIUM
-    trackStuckThresholdMs: 5000
-    playerUpdateInterval: 3
+    resamplingQuality: LOW
+    trackStuckThresholdMs: 10000
+    playerUpdateInterval: 5
     useSeekGhosting: true
     gc-warnings: true
   plugins:
     - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
       snapshot: false
     - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
-      repository: "https://maven.lavalink.dev/releases"
-    - dependency: "com.github.topi314.lavasearch:lavasearch-plugin:1.0.0"
-      repository: "https://maven.lavalink.dev/releases"
-    - dependency: "com.github.devoxin:lavadspx-plugin:0.0.5"
-      repository: "https://jitpack.io"
-    - dependency: "com.github.topi314.lavalyrics:lavalyrics-plugin:1.1.0"
-      repository: "https://maven.lavalink.dev/releases"
-    - dependency: "me.duncte123:java-lyrics-plugin:1.6.6"
       repository: "https://maven.lavalink.dev/releases"
 
 plugins:
@@ -48,20 +40,13 @@ plugins:
     allowDirectPlaylistIds: true
     clients:
       - "TVHTML5_SIMPLY"
-      - "ANDROID_MUSIC"
       - "MUSIC"
       - "WEB"
-      - "WEBEMBEDDED"
     TVHTML5_SIMPLY:
       playback: true
       playlistLoading: true
       searching: true
       videoLoading: true
-    ANDROID_MUSIC:
-      playlistLoading: false
-      videoLoading: true
-      searching: true
-      playback: true
     MUSIC:
       playlistLoading: false
       videoLoading: false
@@ -71,11 +56,6 @@ plugins:
       playlistLoading: false
       videoLoading: true
       searching: true
-      playback: true
-    WEBEMBEDDED:
-      playlistLoading: false
-      videoLoading: false
-      searching: false
       playback: true
     oauth:
       enabled: false
@@ -97,7 +77,7 @@ plugins:
       qobuz: false
       ytdlp: true
       youtube: true
-      flowerytts: true
+      flowerytts: false
     lyrics-sources:
       youtube: true
       lrcLib: true
@@ -119,16 +99,6 @@ plugins:
       playlistLoadLimit: 1
       albumLoadLimit: 1
       artistLoadLimit: 1
-    flowerytts:
-      voice: "${FLOWERY_VOICE:-Olivia}"
-      translate: false
-      silence: 0
-      speed: ${FLOWERY_SPEED:-1.0}
-      audioFormat: "${FLOWERY_AUDIO_FORMAT:-mp3}"
-
-  lavalyrics:
-    sources:
-      - youtube
 
 logging:
   level:
@@ -142,10 +112,11 @@ echo "   yt-dlp: $(yt-dlp --version 2>/dev/null || echo 'NOT FOUND')"
 
 unset _JAVA_OPTIONS
 exec java \
-  -Xmx256m \
-  -Xms64m \
+  -Xmx${LAVALINK_HEAP:-450m} \
+  -Xms128m \
   -XX:+UseG1GC \
   -XX:MaxGCPauseMillis=50 \
-  -XX:MaxMetaspaceSize=80m \
+  -XX:MaxMetaspaceSize=96m \
   -XX:+UseStringDeduplication \
+  -XX:+OptimizeStringConcat \
   -jar /opt/Lavalink/Lavalink.jar
