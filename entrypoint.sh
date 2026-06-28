@@ -33,8 +33,6 @@ lavalink:
       repository: "https://maven.lavalink.dev/releases"
     - dependency: "com.github.topi314.lavasearch:lavasearch-plugin:1.0.0"
       repository: "https://maven.lavalink.dev/releases"
-    - dependency: "com.dunctebot:skybot-lavalink-plugin:1.7.1"
-      repository: "https://maven.lavalink.dev/releases"
     - dependency: "com.github.devoxin:lavadspx-plugin:0.0.5"
       repository: "https://jitpack.io"
     - dependency: "com.github.topi314.lavalyrics:lavalyrics-plugin:1.1.0"
@@ -131,18 +129,6 @@ plugins:
   lavalyrics:
     sources:
       - youtube
-
-  dunctebot:
-    ttsLanguage: "en-US"
-    sources:
-      getyarn: true
-      clypit: true
-      tts: true
-      reddit: true
-      ocremix: true
-      tiktok: true
-      mixcloud: true
-      soundgasm: true
 
 logging:
   level:
