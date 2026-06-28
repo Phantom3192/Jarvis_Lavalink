@@ -33,9 +33,7 @@ lavalink:
       repository: "https://maven.lavalink.dev/releases"
     - dependency: "com.github.topi314.lavasearch:lavasearch-plugin:1.0.0"
       repository: "https://maven.lavalink.dev/releases"
-    - dependency: "com.github.appujet:jiosaavn-plugin:1.0.3"
-      repository: "https://jitpack.io"
-    - dependency: "com.dunctebot:skybot-lavalink-plugin:1.7.0"
+    - dependency: "com.dunctebot:skybot-lavalink-plugin:1.7.1"
       repository: "https://maven.lavalink.dev/releases"
     - dependency: "com.github.devoxin:lavadspx-plugin:0.0.5"
       repository: "https://jitpack.io"
@@ -84,14 +82,8 @@ plugins:
     oauth:
       enabled: false
 
-  jiosaavn:
-    apiURL: "${JIOSAAVN_API_URL:-https://jiosaavn-plugin-api.vercel.app/api}"
-    playlistTrackLimit: ${PLAYLIST_TRACK_LIMIT:-50}
-    recommendationLimit: 10
-
   lavasrc:
     providers:
-      - "jssearch:%QUERY%"
       - 'ytsearch:"%ISRC%"'
       - "ytsearch:%QUERY%"
       - "ytdlpsearch:%QUERY%"
