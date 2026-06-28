@@ -112,7 +112,7 @@ echo "   yt-dlp: $(yt-dlp --version 2>/dev/null || echo 'NOT FOUND')"
 
 unset _JAVA_OPTIONS
 exec java \
-  -Xmx${LAVALINK_HEAP:-450m} \
+  -Xmx${LAVALINK_HEAP:-320m} \
   -Xms128m \
   -XX:+UseG1GC \
   -XX:MaxGCPauseMillis=50 \
