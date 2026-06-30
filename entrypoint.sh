@@ -31,6 +31,8 @@ lavalink:
       snapshot: false
     - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
       repository: "https://maven.lavalink.dev/releases"
+    - dependency: "com.github.appujet:jiosaavn-plugin:1.0.6"
+      repository: "https://maven.appujet.site/releases"
 
 plugins:
   youtube:
@@ -99,6 +101,11 @@ plugins:
       playlistLoadLimit: 1
       albumLoadLimit: 1
       artistLoadLimit: 1
+
+  jiosaavn:
+    apiURL: "${JIOSAAVN_API_URL:-https://jiosaavn-plugin-api.vercel.app/api}"
+    playlistTrackLimit: 50
+    recommendationsTrackLimit: 10
 
 logging:
   level:
