@@ -2,7 +2,8 @@ FROM ghcr.io/lavalink-devs/lavalink:4
 
 USER root
 
-#
+# Installed Java 21 here previously to support the standalone jiosaavn-plugin (now removed,
+# since lavasrc 4.8.3 has native JioSaavn support). Kept for forward-compatibility with newer plugins.
 RUN apt-get update && apt-get install -y python3 ffmpeg curl openjdk-21-jre-headless \
     && curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp \
        -o /usr/local/bin/yt-dlp \
@@ -11,8 +12,6 @@ RUN apt-get update && apt-get install -y python3 ffmpeg curl openjdk-21-jre-head
 
 
 RUN mkdir -p /opt/Lavalink/plugins \
-    && curl -L https://github.com/bongo-devs/jiosaavn-plugin/releases/download/v1.0.6/jiosaavn-plugin-1.0.6.jar \
-       -o /opt/Lavalink/plugins/jiosaavn-plugin-1.0.6.jar \
     && chown -R lavalink:lavalink /opt/Lavalink/plugins
 
 USER lavalink
