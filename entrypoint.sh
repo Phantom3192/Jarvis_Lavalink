@@ -31,8 +31,6 @@ lavalink:
       snapshot: false
     - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
       repository: "https://maven.lavalink.dev/releases"
-    - dependency: "com.github.appujet:jiosaavn-plugin:1.0.5"
-      repository: "https://jitpack.io"
 
 plugins:
   youtube:
