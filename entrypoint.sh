@@ -70,7 +70,7 @@ plugins:
       spotify: true
       applemusic: false
       deezer: false
-      jiosaavn: false
+      jiosaavn: true
       yandexmusic: false
       tidal: false
       vkmusic: false
@@ -99,11 +99,6 @@ plugins:
       playlistLoadLimit: 1
       albumLoadLimit: 1
       artistLoadLimit: 1
-
-  jiosaavn:
-    apiURL: "${JIOSAAVN_API_URL:-https://jiosaavn-plugin-api.vercel.app/api}"
-    playlistTrackLimit: 50
-    recommendationsTrackLimit: 10
 
 logging:
   level:
