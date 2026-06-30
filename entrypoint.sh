@@ -116,7 +116,15 @@ echo "✅ application.yml written on port $SERVER_PORT"
 echo "   yt-dlp: $(yt-dlp --version 2>/dev/null || echo 'NOT FOUND')"
 
 unset _JAVA_OPTIONS
-exec java \
+
+# Locate the Java 21 binary installed in the Dockerfile (path includes arch-specific dir name)
+JAVA21_BIN="$(find /usr/lib/jvm -maxdepth 1 -iname 'java-21-openjdk*' -print -quit)/bin/java"
+if [ ! -x "$JAVA21_BIN" ]; then
+  echo "⚠️  Java 21 binary not found, falling back to default java (jiosaavn-plugin may fail to load)"
+  JAVA21_BIN="java"
+fi
+
+exec "$JAVA21_BIN" \
   -Xmx${LAVALINK_HEAP:-320m} \
   -Xms128m \
   -XX:+UseG1GC \
