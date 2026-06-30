@@ -2,7 +2,8 @@ FROM ghcr.io/lavalink-devs/lavalink:4
 
 USER root
 
-RUN apt-get update && apt-get install -y python3 ffmpeg curl \
+#
+RUN apt-get update && apt-get install -y python3 ffmpeg curl openjdk-21-jre-headless \
     && curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp \
        -o /usr/local/bin/yt-dlp \
     && chmod +x /usr/local/bin/yt-dlp \
