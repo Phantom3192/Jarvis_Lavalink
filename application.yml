@@ -46,7 +46,7 @@ plugins:
       - "scsearch:%QUERY%"
     sources:
       spotify: true
-      jiosaavn: true
+      jiosaavn: false
       ytdlp: true
       youtube: true
     spotify:
