@@ -47,7 +47,7 @@ plugins:
     sources:
       spotify: true
       jiosaavn: false
-      ytdlp: true
+      ytdlp: false
       youtube: true
     spotify:
       countryCode: "${SPOTIFY_COUNTRY_CODE:IN}"
