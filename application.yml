@@ -1,17 +1,28 @@
 server:
-  port: 5000
+  port: 2333
   address: 0.0.0.0
 
 lavalink:
   server:
-    password: "jarvisbot"
+    password: "${LAVALINK_PASSWORD}"
     sources:
       youtube: false
       soundcloud: true
       http: true
+      twitch: false
+      vimeo: false
+      nico: false
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    opusEncodingQuality: 5
+    resamplingQuality: LOW
+    trackStuckThresholdMs: 10000
+    playerUpdateInterval: 5
+    useSeekGhosting: true
+    gc-warnings: true
   plugins:
     - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
-      repository: "https://maven.lavalink.dev/releases"
+      snapshot: false
     - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
       repository: "https://maven.lavalink.dev/releases"
 
@@ -22,24 +33,24 @@ plugins:
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
     clients:
-      - TVHTML5_SIMPLY
-      - MUSIC
-      - IOS
+      - "TVHTML5_SIMPLY"
+      - "MUSIC"
+      - "WEB"
     oauth:
-      enabled: false
+      enabled: true
+      refreshToken: "${YT_REFRESH_TOKEN:}"
   lavasrc:
     providers:
-      - "ytdlpsearch:%QUERY%"
+      - 'ytsearch:"%ISRC%"'
       - "ytsearch:%QUERY%"
+      - "scsearch:%QUERY%"
     sources:
+      spotify: true
+      jiosaavn: true
       ytdlp: true
-      youtube: false
-      spotify: false
-      applemusic: false
-      deezer: false
-    ytdlp:
-      path: "yt-dlp"
-      searchLimit: 10
+      youtube: true
+    spotify:
+      countryCode: "${SPOTIFY_COUNTRY_CODE:IN}"
 
 logging:
   level:
