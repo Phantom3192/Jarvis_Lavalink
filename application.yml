@@ -40,6 +40,7 @@ plugins:
       - "TVHTML5_SIMPLY"
       - "ANDROID_VR"
       - "WEB"
+      - "WEBEMBEDDED"
       - "TV"
     oauth:
       enabled: true
@@ -60,3 +61,4 @@ logging:
   level:
     root: INFO
     lavalink: INFO
+    dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
