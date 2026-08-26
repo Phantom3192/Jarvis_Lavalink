@@ -11,7 +11,7 @@
 # Requires: curl, jq, grep -P (GNU grep)
 
 BGUTIL_POT_URL="http://127.0.0.1:4416/get_pot"
-LAVALINK_BASE_URL="http://127.0.0.1:26169"
+LAVALINK_BASE_URL="http://127.0.0.1:2333"
 LAVALINK_PASSWORD="${LAVALINK_PASSWORD:?Set LAVALINK_PASSWORD in the environment}"
 
 set -uo pipefail   # NOTE: deliberately NOT using -e here — every step
