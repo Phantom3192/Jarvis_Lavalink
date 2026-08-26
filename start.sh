@@ -2,8 +2,20 @@
 set -e
 
 if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
-  echo "❌ node/npm not found in this container — webpo-generator needs Node.js installed on the image (bot-hosting.net's Java egg may not include it by default)."
-  exit 1
+  echo "node/npm not found — downloading a portable Node.js runtime (no system install needed)..."
+  NODE_VERSION="22.11.0"
+  if [ ! -d "./node-runtime" ]; then
+    curl -L -o node.tar.xz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz"
+    mkdir -p ./node-runtime
+    tar -xJf node.tar.xz -C ./node-runtime --strip-components=1
+    rm -f node.tar.xz
+  fi
+  export PATH="$(pwd)/node-runtime/bin:$PATH"
+  if ! command -v node >/dev/null 2>&1; then
+    echo "❌ Portable Node.js extraction failed — this container may lack xz/tar support. Extraction needs 'tar -xJf' to work; check that xz-utils (or equivalent) is available."
+    exit 1
+  fi
+  echo "✅ Using portable Node $(node -v) from ./node-runtime"
 fi
 
 if [ ! -f Lavalink.jar ]; then
