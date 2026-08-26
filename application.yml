@@ -40,12 +40,13 @@ plugins:
       - "WEB"
       - "MWEB"
       - "WEBEMBEDDED"
-      - "ANDROID"
       - "ANDROID_MUSIC"
       - "ANDROID_VR"
       - "IOS"
       - "TV"
-      - "TVHTML5_SIMPLY"
+      - "TVHTML5EMBEDDED"
+    remoteCipher:
+      url: "https://cipher.kikkia.dev/"
     oauth:
       enabled: true
       refreshToken: "${YT_REFRESH_TOKEN:}"
