@@ -36,20 +36,23 @@ plugins:
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
     clients:
-      - "MUSIC"
-      - "WEB"
-      - "MWEB"
-      - "WEBEMBEDDED"
-      - "ANDROID_MUSIC"
-      - "ANDROID_VR"
-      - "IOS"
+      - "TVHTML5_SIMPLY"
       - "TV"
-      - "TVHTML5EMBEDDED"
+      - "ANDROID_VR"
+      - "ANDROID"
+      - "ANDROID_MUSIC"
+      - "MUSIC"
+      - "WEBEMBEDDED"
+      - "MWEB"
+      - "WEB"
     remoteCipher:
       url: "https://cipher.kikkia.dev/"
+    remotePot:
+      url: "http://localhost:8080"
     oauth:
       enabled: true
       refreshToken: "${YT_REFRESH_TOKEN:}"
+      skipInitialization: true
   lavasrc:
     providers:
       - 'ytsearch:"%ISRC%"'
