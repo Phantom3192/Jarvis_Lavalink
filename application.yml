@@ -21,10 +21,13 @@ lavalink:
     useSeekGhosting: true
     gc-warnings: true
   plugins:
-    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
-      snapshot: false
-    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
+    - dependency: "dev.lavalink.youtube:youtube-plugin:f45bbb7aebfcbc1c553769e04af6cd43afa8b7c3"
+      repository: "https://maven.lavalink.dev/snapshots"
+      snapshot: true
+    - dependency: "com.github.topi314.lavasearch:lavasearch-plugin:1.0.0"
       repository: "https://maven.lavalink.dev/releases"
+    - dependency: "com.github.infnibor.lavasrc:lavasrc-plugin:08f7f9e"
+      repository: "https://maven.pcreators.pl/snapshots"
 
 plugins:
   youtube:
@@ -33,10 +36,11 @@ plugins:
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
     clients:
-      - "TV"
+      - "MUSIC"
       - "TVHTML5_SIMPLY"
       - "ANDROID_VR"
       - "WEB"
+      - "TV"
     oauth:
       enabled: true
       refreshToken: "${YT_REFRESH_TOKEN:}"
