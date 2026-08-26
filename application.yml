@@ -37,11 +37,15 @@ plugins:
     allowDirectPlaylistIds: true
     clients:
       - "MUSIC"
-      - "TVHTML5_SIMPLY"
-      - "ANDROID_VR"
       - "WEB"
+      - "MWEB"
       - "WEBEMBEDDED"
+      - "ANDROID"
+      - "ANDROID_MUSIC"
+      - "ANDROID_VR"
+      - "IOS"
       - "TV"
+      - "TVHTML5_SIMPLY"
     oauth:
       enabled: true
       refreshToken: "${YT_REFRESH_TOKEN:}"
