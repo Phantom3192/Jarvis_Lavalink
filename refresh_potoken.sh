@@ -2,13 +2,13 @@
 #
 # refresh_potoken.sh
 #
-# Polls a locally-running bgutil-pot HTTP server for a fresh YouTube
-# PO Token + visitorData pair, then pushes it into Lavalink's
-# youtube-source plugin via its REST hot-reload endpoint
-# (POST /youtube), so tokens never go stale without needing a
-# Lavalink restart.
+# Fetches a real visitorData session id from YouTube, asks a
+# locally-running bgutil-pot server for a poToken bound to it, then
+# pushes both into Lavalink's youtube-source plugin via its REST
+# hot-reload endpoint (POST /youtube), so tokens never go stale
+# without needing a Lavalink restart.
 #
-# Requires: curl, jq
+# Requires: curl, jq, grep -P (GNU grep)
 #
 # --------------------------------------------------------------------
 # CONFIG - edit these for your setup
@@ -23,33 +23,43 @@ LAVALINK_BASE_URL="http://127.0.0.1:2333"
 # Same password as `lavalink.server.password` / your LAVALINK_PASSWORD env var
 LAVALINK_PASSWORD="${LAVALINK_PASSWORD:?Set LAVALINK_PASSWORD in the environment}"
 
+set -euo pipefail
+
 # --------------------------------------------------------------------
-# 1. Ask bgutil-pot for a fresh token.
-#    Leaving content_binding empty requests a visitorData-bound
-#    (session-wide) token rather than a per-video one, which is what
-#    you want for the WEB client here.
+# 1. Get a fresh visitorData from YouTube itself.
+#    bgutil-pot does NOT generate this — it only mints a poToken bound
+#    to whatever content_binding you give it. visitorData is YouTube's
+#    own anonymous session identifier, embedded in the homepage's
+#    ytcfg blob on every page load.
 # --------------------------------------------------------------------
 
-set -euo pipefail
+visitor_data="$(curl -sf 'https://www.youtube.com/' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' \
+  | grep -oP '"visitorData":"\K[^"]+' | head -n1)"
+
+if [[ -z "$visitor_data" ]]; then
+  echo "❌ Could not extract visitorData from youtube.com homepage."
+  exit 1
+fi
+
+# --------------------------------------------------------------------
+# 2. Ask bgutil-pot for a poToken bound to that visitorData.
+# --------------------------------------------------------------------
 
 response="$(curl -sf -X POST "$BGUTIL_POT_URL" \
   -H "Content-Type: application/json" \
-  -d '{"content_binding": ""}')"
+  -d "{\"content_binding\": \"$visitor_data\"}")"
 
-# NOTE: Verify these field names against your bgutil-pot version first —
-# run: curl -sX POST http://127.0.0.1:4416/get_pot -H "Content-Type: application/json" -d '{"content_binding": ""}' | jq .
-# and adjust the two jq paths below to match whatever keys you actually see.
-po_token="$(echo "$response" | jq -r '.po_token // .poToken // empty')"
-visitor_data="$(echo "$response" | jq -r '.visit_identifier // .visitorData // .visitor_data // empty')"
+po_token="$(echo "$response" | jq -r '.poToken // .po_token // empty')"
 
-if [[ -z "$po_token" || -z "$visitor_data" ]]; then
-  echo "❌ Could not extract po_token/visitor_data from bgutil-pot response:"
+if [[ -z "$po_token" ]]; then
+  echo "❌ Could not extract poToken from bgutil-pot response:"
   echo "$response"
   exit 1
 fi
 
 # --------------------------------------------------------------------
-# 2. Push the fresh token into Lavalink (no restart needed).
+# 3. Push the fresh poToken + visitorData into Lavalink (no restart needed).
 # --------------------------------------------------------------------
 
 update_payload="$(jq -n \
