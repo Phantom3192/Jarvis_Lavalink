@@ -23,11 +23,16 @@ if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
 
     mkdir -p ./node-runtime
     if ! command -v xz >/dev/null 2>&1; then
-      echo "ℹ️  No system xz — trying to install xz-utils via the container's own package manager first."
+      echo "ℹ️  No system xz found."
       if command -v apt-get >/dev/null 2>&1; then
-        timeout 25 apt-get update -qq >/dev/null 2>&1 && timeout 25 apt-get install -y -qq xz-utils >/dev/null 2>&1
+        echo "ℹ️  apt-get present (whoami: $(whoami 2>&1)) — attempting install..."
+        timeout 25 apt-get update -qq 2>&1 | tail -5
+        timeout 25 apt-get install -y -qq xz-utils 2>&1 | tail -10
       elif command -v apk >/dev/null 2>&1; then
-        timeout 25 apk add --no-cache xz >/dev/null 2>&1
+        echo "ℹ️  apk present (whoami: $(whoami 2>&1)) — attempting install..."
+        timeout 25 apk add --no-cache xz 2>&1 | tail -10
+      else
+        echo "ℹ️  Neither apt-get nor apk found on this system at all."
       fi
     fi
 
