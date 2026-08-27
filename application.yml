@@ -92,6 +92,12 @@ plugins:
     - WEB
     - MWEB
     enabled: true
+    oauth:
+      enabled: true
+      refreshToken: ${YT_REFRESH_TOKEN}
+      skipInitialization: true
+    remotePot:
+      url: "http://127.0.0.1:8080"
 sentry:
   dsn: ''
   environment: ''
