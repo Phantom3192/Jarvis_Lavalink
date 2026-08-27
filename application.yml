@@ -56,10 +56,10 @@ plugins:
         searching: true
         videoLoading: true
       MUSIC:
-        playback: false
+        playback: true
         playlistLoading: false
         searching: true
-        videoLoading: false
+        videoLoading: true
       MWEB:
         playback: true
         playlistLoading: true
