@@ -1,72 +1,103 @@
-server:
-  port: 2333
-  address: 0.0.0.0
-
 lavalink:
-  server:
-    password: "${LAVALINK_PASSWORD}"
-    sources:
-      youtube: false
-      soundcloud: false
-      http: true
-      twitch: false
-      vimeo: false
-      nico: false
-    bufferDurationMs: 400
-    frameBufferDurationMs: 5000
-    opusEncodingQuality: 5
-    resamplingQuality: LOW
-    trackStuckThresholdMs: 10000
-    playerUpdateInterval: 5
-    useSeekGhosting: true
-    gc-warnings: true
   plugins:
-    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.2"
-      repository: "https://maven.lavalink.dev/releases"
-      snapshot: false
-    - dependency: "com.github.topi314.lavasearch:lavasearch-plugin:1.0.0"
-      repository: "https://maven.lavalink.dev/releases"
-    - dependency: "com.github.infnibor.lavasrc:lavasrc-plugin:08f7f9e"
-      repository: "https://maven.pcreators.pl/snapshots"
-
+  - dependency: dev.lavalink.youtube:youtube-plugin:1.18.2
+    repository: https://maven.lavalink.dev/releases
+  server:
+    bufferDurationMs: 400
+    frameBufferDurationMs: 1000
+    gc-warnings: true
+    password: youshallnotpass
+    playerUpdateInterval: 1
+    soundcloudSearchEnabled: true
+    sources:
+      bandcamp: true
+      http: true
+      local: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
+      youtube: false
+    youtubePlaylistLoadLimit: 100
+    youtubeSearchEnabled: true
+logging:
+  file:
+    path: ./logs/
+  level:
+    lavalink: INFO
+    root: INFO
+  logback:
+    rollingpolicy:
+      max-history: 15
+      max-size: 10MB
+metrics:
+  prometheus:
+    enabled: false
+    endpoint: /metrics
 plugins:
   youtube:
-    enabled: true
-    allowSearch: true
-    allowDirectVideoIds: true
     allowDirectPlaylistIds: true
+    allowDirectVideoIds: true
+    allowSearch: true
+    clientOptions:
+      ANDROID_MUSIC:
+        playback: true
+        playlistLoading: false
+        searching: true
+        videoLoading: true
+      ANDROID_VR:
+        playback: true
+        playlistLoading: true
+        searching: true
+        videoLoading: true
+      IOS:
+        playback: true
+        playlistLoading: true
+        searching: true
+        videoLoading: true
+      MUSIC:
+        playback: false
+        playlistLoading: false
+        searching: true
+        videoLoading: false
+      MWEB:
+        playback: true
+        playlistLoading: true
+        searching: true
+        videoLoading: true
+      TV:
+        playback: false
+        playlistLoading: false
+        searching: false
+        videoLoading: false
+      TVHTML5EMBEDDED:
+        playback: false
+        playlistLoading: false
+        searching: true
+        videoLoading: true
+      WEB:
+        playback: true
+        playlistLoading: true
+        searching: true
+        videoLoading: true
+      WEBEMBEDDED:
+        playback: true
+        playlistLoading: false
+        searching: false
+        videoLoading: true
     clients:
-      - "TVHTML5_SIMPLY"
-      - "TV"
-      - "ANDROID_VR"
-      - "ANDROID"
-      - "ANDROID_MUSIC"
-      - "MUSIC"
-      - "WEBEMBEDDED"
-      - "MWEB"
-      - "WEB"
-    remoteCipher:
-      url: "https://cipher.kikkia.dev/"
-    remotePot:
-      url: "http://localhost:8080"
-    oauth:
-      enabled: true
-      refreshToken: "${YT_REFRESH_TOKEN:}"
-      skipInitialization: true
-  lavasrc:
-    providers:
-      - 'ytsearch:"%ISRC%"'
-      - "ytsearch:%QUERY%"
-    sources:
-      spotify: true
-      jiosaavn: false
-      ytdlp: false
-      youtube: true
-    spotify:
-      countryCode: "${SPOTIFY_COUNTRY_CODE:IN}"
-
-logging:
-  level:
-    root: INFO
-    lavalink: INFO
-    dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
+    - MUSIC
+    - WEBEMBEDDED
+    - ANDROID_VR
+    - ANDROID_MUSIC
+    - TVHTML5EMBEDDED
+    - TV
+    - IOS
+    - WEB
+    - MWEB
+    enabled: true
+sentry:
+  dsn: ''
+  environment: ''
+server:
+  address: localhost
+  port: 2333
