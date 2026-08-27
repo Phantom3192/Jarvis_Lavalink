@@ -1,4 +1,8 @@
 lavalink:
+  plugins:
+  - dependency: "dev.lavalink.youtube:youtube-plugin:f45bbb7aebfcbc1c553769e04af6cd43afa8b7c3"
+    repository: "https://maven.lavalink.dev/snapshots"
+    snapshot: true
   server:
     bufferDurationMs: 400
     frameBufferDurationMs: 1000
@@ -98,6 +102,8 @@ plugins:
       skipInitialization: true
     remotePot:
       url: "http://127.0.0.1:8080"
+    remoteCipher:
+      url: "http://localhost:8001"
 sentry:
   dsn: ''
   environment: ''
