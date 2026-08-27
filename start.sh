@@ -22,8 +22,18 @@ if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
     echo "ℹ️  File type check: $(file node.tar.xz 2>/dev/null || echo 'file(1) not available')"
 
     mkdir -p ./node-runtime
-    tar -xJf node.tar.xz -C ./node-runtime --strip-components=1
-    tar_status=$?
+    if command -v xz >/dev/null 2>&1; then
+      tar -xJf node.tar.xz -C ./node-runtime --strip-components=1
+      tar_status=$?
+    else
+      echo "ℹ️  No system xz found — fetching a static busybox (has its own xz decoder) to unpack instead."
+      curl -sS -L -o busybox https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox
+      chmod +x busybox
+      ./busybox xz -dc node.tar.xz > node.tar
+      tar -xf node.tar -C ./node-runtime --strip-components=1
+      tar_status=$?
+      rm -f node.tar busybox
+    fi
     if [ "$tar_status" -ne 0 ]; then
       echo "❌ tar extraction failed with exit code $tar_status — see tar's own error output above."
       exit 1
