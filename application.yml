@@ -3,7 +3,7 @@ lavalink:
     bufferDurationMs: 400
     frameBufferDurationMs: 1000
     gc-warnings: true
-    password: youshallnotpass
+    password: ${LAVALINK_PASSWORD}
     playerUpdateInterval: 1
     soundcloudSearchEnabled: true
     sources:
