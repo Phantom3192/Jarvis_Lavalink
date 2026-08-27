@@ -3,8 +3,8 @@ set -e
 
 if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
   echo "node/npm not found — downloading a portable Node.js runtime (no system install needed)..."
-  NODE_VERSION="22.11.0"
-  if [ ! -x "./node-runtime/bin/node" ]; then
+  NODE_VERSION="22.22.1"
+  if [ ! -x "./node-runtime/bin/node" ] || [ "$(cat ./node-runtime/.version 2>/dev/null)" != "$NODE_VERSION" ]; then
     rm -rf ./node-runtime node.tar.xz
     set +e   # diagnose each step ourselves instead of letting -e hide which one failed
 
@@ -46,6 +46,7 @@ if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
       echo "❌ tar extraction failed with exit code $tar_status — see tar's own error output above."
       exit 1
     fi
+    echo "$NODE_VERSION" > ./node-runtime/.version
     rm -f node.tar.xz
 
     set -e
