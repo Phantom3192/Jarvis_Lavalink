@@ -27,7 +27,15 @@ if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
       tar_status=$?
     else
       echo "ℹ️  No system xz found — fetching a static busybox (has its own xz decoder) to unpack instead."
-      curl -sS -L -o busybox https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox
+      bb_http_code="$(curl -sS -m 30 -w '%{http_code}' -o busybox -L https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox)"
+      bb_curl_status=$?
+      echo "ℹ️  busybox curl exit=$bb_curl_status, HTTP status=$bb_http_code, size=$(wc -c < busybox 2>/dev/null || echo 0) bytes"
+      if [ "$bb_curl_status" -ne 0 ] || [ "$bb_http_code" != "200" ]; then
+        echo "❌ busybox download failed (curl exit $bb_curl_status, HTTP $bb_http_code). First 300 bytes of response:"
+        head -c 300 busybox 2>/dev/null
+        echo
+        exit 1
+      fi
       chmod +x busybox
       ./busybox xz -dc node.tar.xz > node.tar
       tar -xf node.tar -C ./node-runtime --strip-components=1
