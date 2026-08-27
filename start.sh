@@ -22,16 +22,26 @@ if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
     echo "ℹ️  File type check: $(file node.tar.xz 2>/dev/null || echo 'file(1) not available')"
 
     mkdir -p ./node-runtime
+    if ! command -v xz >/dev/null 2>&1; then
+      echo "ℹ️  No system xz — trying to install xz-utils via the container's own package manager first."
+      if command -v apt-get >/dev/null 2>&1; then
+        timeout 25 apt-get update -qq >/dev/null 2>&1 && timeout 25 apt-get install -y -qq xz-utils >/dev/null 2>&1
+      elif command -v apk >/dev/null 2>&1; then
+        timeout 25 apk add --no-cache xz >/dev/null 2>&1
+      fi
+    fi
+
     if command -v xz >/dev/null 2>&1; then
+      echo "✅ xz available ($(command -v xz))"
       tar -xJf node.tar.xz -C ./node-runtime --strip-components=1
       tar_status=$?
     else
-      echo "ℹ️  No system xz found — fetching a static busybox (has its own xz decoder) to unpack instead."
+      echo "ℹ️  Package manager install unavailable/failed — fetching a static busybox (has its own xz decoder) as last resort."
       bb_http_code="$(curl -sS -m 30 -w '%{http_code}' -o busybox -L https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox)"
       bb_curl_status=$?
       echo "ℹ️  busybox curl exit=$bb_curl_status, HTTP status=$bb_http_code, size=$(wc -c < busybox 2>/dev/null || echo 0) bytes"
       if [ "$bb_curl_status" -ne 0 ] || [ "$bb_http_code" != "200" ]; then
-        echo "❌ busybox download failed (curl exit $bb_curl_status, HTTP $bb_http_code). First 300 bytes of response:"
+        echo "❌ busybox download failed too (curl exit $bb_curl_status, HTTP $bb_http_code). First 300 bytes of response:"
         head -c 300 busybox 2>/dev/null
         echo
         exit 1
