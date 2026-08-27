@@ -1,7 +1,4 @@
 lavalink:
-  plugins:
-  - dependency: dev.lavalink.youtube:youtube-plugin:1.18.2
-    repository: https://maven.lavalink.dev/releases
   server:
     bufferDurationMs: 400
     frameBufferDurationMs: 1000
