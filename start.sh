@@ -80,6 +80,16 @@ if [ ! -f Lavalink.jar ]; then
   curl -L -o Lavalink.jar https://github.com/lavalink-devs/Lavalink/releases/latest/download/Lavalink.jar
 fi
 
+# Raise the open-file-descriptor limit for this shell (and everything it
+# spawns, including java). Each voice connection's native UDP/audio
+# resources (JDA-NAS, DAVE) can hold file descriptors that aren't always
+# released cleanly on an abrupt disconnect — if the default limit (often
+# 1024) gets exhausted after enough disconnect/reconnect cycles, new
+# connections can silently fail even though Lavalink looks "up", and only
+# a full process restart (which the OS reclaims on exit) clears it.
+# This raises the ceiling so that's far less likely to be hit.
+ulimit -n 65536 2>/dev/null || echo "ℹ️  Could not raise ulimit -n (may need host/panel-level config instead)."
+
 # Start webpo-generator in the background if it's not already present.
 # Replaces the old bgutil-pot + refresh_potoken.sh flow: webpo-generator
 # mints a poToken per request via Lavalink's remotePot config instead of
