@@ -101,6 +101,28 @@ if [ ! -d ./webpo-generator ]; then
 fi
 (cd ./webpo-generator && HOST=127.0.0.1 PORT=8080 npm start) &
 
+# Background network diagnostic — since this panel only exposes the
+# process console (no shell access to run ping/curl manually), this logs
+# a lightweight connectivity check every 15s to netcheck.log. After the
+# next disconnect, open netcheck.log via the file manager/SFTP and check
+# whether there's a gap or FAIL entry right around the disconnect
+# timestamp — that tells us if it's this host's own network dropping
+# briefly (outbound requests stall too) vs. something specific to the
+# inbound port your bot connects through (outbound stays clean).
+(
+  : > netcheck.log
+  while true; do
+    ts="$(date +"%Y-%m-%dT%H:%M:%S%z")"
+    result="$(curl -s -o /dev/null -m 5 -w "%{http_code} %{time_total}s" https://1.1.1.1 2>&1)"
+    if [ -n "$result" ] && [ "${result%% *}" != "000" ]; then
+      echo "$ts OK  $result" >> netcheck.log
+    else
+      echo "$ts FAIL $result" >> netcheck.log
+    fi
+    sleep 15
+  done
+) &
+
 # Start Lavalink with automatic restart if it ever dies unexpectedly
 # (e.g. OOM-killed by the host — this happens silently, with no exception
 # in Lavalink's own log, so a supervising loop is the only reliable fix
