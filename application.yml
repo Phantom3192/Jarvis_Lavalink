@@ -18,9 +18,9 @@ lavalink:
       rotation: true
       channelMix: true
       lowPass: true
-    frameBufferDurationMs: 1000
+    frameBufferDurationMs: 400
     gc-warnings: true
-    nonAllocatingFrameBuffer: false
+    nonAllocatingFrameBuffer: true
     opusEncodingQuality: 10
     password: ${LAVALINK_PASSWORD}
     playerUpdateInterval: 1
