@@ -91,8 +91,42 @@ if [ ! -d ./webpo-generator ]; then
 fi
 (cd ./webpo-generator && HOST=127.0.0.1 PORT=8080 npm start) &
 
-# Start Lavalink
-java -Xmx${LAVALINK_HEAP:-400m} -jar Lavalink.jar &
-LAVALINK_PID=$!
+# Start Lavalink with automatic restart if it ever dies unexpectedly
+# (e.g. OOM-killed by the host — this happens silently, with no exception
+# in Lavalink's own log, so a supervising loop is the only reliable fix
+# short of raising the host's memory limit).
+#
+# Heap sizing for a 4.4GB container:
+#   ~300MB  OS / container overhead
+#   ~200MB  webpo-generator (Node, runs alongside Lavalink in this same container)
+#   ~600MB  JVM non-heap (metaspace, thread stacks, native libs: JDA-NAS, DAVE,
+#           direct/off-heap buffers used by nonAllocatingFrameBuffer)
+#   ------
+#   ~1100MB reserved, leaving ~3.2GB safely available for heap.
+# 3072m keeps a healthy margin below that so a burst (many guilds playing at
+# once, GC overhead, etc.) doesn't push the container over its limit again.
+LAVALINK_RUNNING=1
+trap 'LAVALINK_RUNNING=0; kill $(jobs -p) 2>/dev/null; exit 0' INT TERM
 
-wait $LAVALINK_PID
+RESTART_COUNT=0
+while [ "$LAVALINK_RUNNING" = "1" ]; do
+  java -Xmx${LAVALINK_HEAP:-3072m} -jar Lavalink.jar &
+  LAVALINK_PID=$!
+  wait $LAVALINK_PID
+  EXIT_CODE=$?
+
+  if [ "$LAVALINK_RUNNING" = "0" ]; then
+    break
+  fi
+
+  RESTART_COUNT=$((RESTART_COUNT + 1))
+  echo "⚠️  Lavalink exited (code $EXIT_CODE, restart #$RESTART_COUNT) — likely OOM-killed by the host if no error was printed above."
+
+  if [ "$RESTART_COUNT" -ge 5 ]; then
+    echo "❌ Lavalink has crashed 5 times in a row — backing off 60s to avoid a restart loop. Check LAVALINK_HEAP / host memory limit."
+    sleep 60
+    RESTART_COUNT=0
+  else
+    sleep 5
+  fi
+done
