@@ -1,8 +1,8 @@
 lavalink:
   plugins:
   - dependency: "dev.lavalink.youtube:youtube-plugin:f45bbb7aebfcbc1c553769e04af6cd43afa8b7c3"
+    repository: "https://maven.lavalink.dev/snapshots"
     snapshot: true
-    repository: "https://maven.lavalink.dev/releases"
   server:
     bufferDurationMs: 400
     frameBufferDurationMs: 1000
