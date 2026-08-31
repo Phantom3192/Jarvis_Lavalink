@@ -31,7 +31,7 @@ lavalink:
       http: true
       local: true
       nico: false
-      soundcloud: true
+      soundcloud: false
       twitch: true
       vimeo: true
       youtube: false
@@ -89,10 +89,10 @@ plugins:
         searching: true
         videoLoading: true
       TV:
-        playback: false
-        playlistLoading: false
-        searching: false
-        videoLoading: false
+        playback: true
+        playlistLoading: true
+        searching: true
+        videoLoading: true
       TVHTML5EMBEDDED:
         playback: false
         playlistLoading: false
