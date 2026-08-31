@@ -1,6 +1,7 @@
 lavalink:
   plugins:
-  - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.2"
+  - dependency: "dev.lavalink.youtube:youtube-plugin:f45bbb7aebfcbc1c553769e04af6cd43afa8b7c3"
+    snapshot: true
     repository: "https://maven.lavalink.dev/releases"
   server:
     bufferDurationMs: 400
