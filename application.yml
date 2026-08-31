@@ -1,5 +1,7 @@
 lavalink:
   plugins:
+  - dependency: "dev.lavalink.youtube:youtube-plugin:42cc5a2042f31dba3fdc523618ef380a1a8bb79d"
+    snapshot: true
   - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
     repository: "https://maven.lavalink.dev/releases"
     snapshot: false
@@ -29,7 +31,7 @@ lavalink:
       http: true
       local: true
       nico: false
-      soundcloud: false
+      soundcloud: true
       twitch: true
       vimeo: true
       youtube: false
@@ -117,7 +119,6 @@ plugins:
     enabled: true
     oauth:
       enabled: true
-      fallback: true
       refreshToken: ${YT_REFRESH_TOKEN}
       skipInitialization: true
     remotePot:
