@@ -6,7 +6,7 @@ lavalink:
     repository: "https://maven.lavalink.dev/releases"
     snapshot: false
   server:
-    bufferDurationMs: 400
+    bufferDurationMs: 1500
     filters:
       volume: true
       equalizer: true
@@ -18,13 +18,13 @@ lavalink:
       rotation: true
       channelMix: true
       lowPass: true
-    frameBufferDurationMs: 400
+    frameBufferDurationMs: 5000
     gc-warnings: true
     nonAllocatingFrameBuffer: true
     opusEncodingQuality: 10
     password: ${LAVALINK_PASSWORD}
     playerUpdateInterval: 1
-    resamplingQuality: LOW
+    resamplingQuality: HIGH
     soundcloudSearchEnabled: true
     sources:
       bandcamp: true
