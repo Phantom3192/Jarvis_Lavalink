@@ -110,7 +110,7 @@ trap 'LAVALINK_RUNNING=0; kill $(jobs -p) 2>/dev/null; exit 0' INT TERM
 
 RESTART_COUNT=0
 while [ "$LAVALINK_RUNNING" = "1" ]; do
-  java -Xmx${LAVALINK_HEAP:-3072m} -jar Lavalink.jar &
+  java -Xmx${LAVALINK_HEAP:-3072m} -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -jar Lavalink.jar &
   LAVALINK_PID=$!
   wait $LAVALINK_PID
   EXIT_CODE=$?
