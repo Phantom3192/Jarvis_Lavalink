@@ -55,7 +55,8 @@ logging:
   file:
     path: ./logs/
   level:
-    lavalink: INFO
+    lavalink: DEBUG
+    com.sedmelluq.lava: DEBUG
     root: INFO
   logback:
     rollingpolicy:
@@ -130,7 +131,7 @@ plugins:
       refreshToken: ${YT_REFRESH_TOKEN}
       skipInitialization: true
     remotePot:
-      url: "http://127.0.0.1:8080"
+      url: "http://127.0.0.1:8091"
     remoteCipher:
       url: "https://cipher.kikkia.dev/"
 sentry:
