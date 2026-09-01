@@ -39,6 +39,14 @@ lavalink:
       connectTimeoutMs: 3000
       connectionRequestTimeoutMs: 3000
       socketTimeoutMs: 3000
+    # Only uncomment and fill this in if bot-hosting.cloud confirms they
+    # assign you a fixed public IP that outbound UDP traffic actually
+    # routes through. If they don't support UDP forwarding at all, this
+    # won't fix voice connect timeouts — you'd need a different host.
+    # ratelimit:
+    #   ipBlocks:
+    #     - "YOUR.PUBLIC.IP.HERE/32"
+    #   strategy: "RotateOnBan"
     trackStuckThresholdMs: 10000
     useSeekGhosting: true
     youtubePlaylistLoadLimit: 6
