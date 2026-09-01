@@ -57,6 +57,7 @@ logging:
   level:
     lavalink: DEBUG
     com.sedmelluq.lava: DEBUG
+    dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
     root: INFO
   logback:
     rollingpolicy:
@@ -128,7 +129,11 @@ plugins:
     enabled: true
     oauth:
       enabled: true
-      refreshToken: ${YT_REFRESH_TOKEN}
+      # Leave refreshToken unset/blank for the first run so the OAuth
+      # device-code flow triggers and prints your refresh token to the
+      # console. Once you have a token, put it back here (or in
+      # YT_REFRESH_TOKEN) and this whole flow is skipped on future boots.
+      # refreshToken: ${YT_REFRESH_TOKEN}
       skipInitialization: false
     remotePot:
       url: "http://127.0.0.1:8091"
