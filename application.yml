@@ -22,7 +22,7 @@ lavalink:
     gc-warnings: true
     nonAllocatingFrameBuffer: true
     opusEncodingQuality: 10
-    password: ${LAVALINK_PASSWORD}
+    password: ""
     playerUpdateInterval: 1
     resamplingQuality: HIGH
     soundcloudSearchEnabled: true
