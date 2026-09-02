@@ -5,38 +5,45 @@ lavalink:
   - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
     repository: "https://maven.lavalink.dev/releases"
     snapshot: false
+  
   server:
     address: 0.0.0.0
     port: 26135
     password: ${LAVALINK_SERVER_PASSWORD}  # ✅ CHANGED: Added password
     
-    # Voice connection settings - ✅ NEW
+    # ===== PERSISTENT CONNECTION SETTINGS =====
+    
+    # Session settings - keep alive forever
+    session:
+      defaultTimeout: 3600000  # 1 hour in milliseconds
+      maxTimeout: 86400000     # 24 hours max
+    
+    # Voice connection settings
     voice:
-      connectionTimeout: 10000
-      keepAliveInterval: 5000
+      connectionTimeout: 30000      # Increased to 30 seconds
+      keepAliveInterval: 5000       # Keep-alive every 5 seconds
       udpKeepAlive: true
+      reconnectAttempts: 999        # Retry forever
+      reconnectDelay: 2000          # 2 second delay between retries
     
-    # UDP settings - ✅ NEW
+    # UDP settings
     udp:
-      bufferSize: 2048
-      timeout: 30000
+      bufferSize: 4096              # Increased buffer
+      timeout: 60000                # 60 second timeout
     
-    # Rate limiting - ✅ UNCOMMENTED & FIXED
-    # ratelimit:
-    #   ipBlocks:
-    #     - "0.0.0.0/0"
-    #   strategy: "RotateOnBan"
-    #   banDuration: 60000
+    # Player settings - never give up
+    playerUpdateInterval: 1         # Update every second
+    trackStuckThresholdMs: 30000    # 30 seconds before track is stuck
     
-    # Buffer settings - ✅ INCREASED
+    # Buffer settings
     bufferDurationMs: 2000
     frameBufferDurationMs: 7500
     gc-warnings: true
     nonAllocatingFrameBuffer: true
     opusEncodingQuality: 10
-    playerUpdateInterval: 5  # ✅ INCREASED from 1
     resamplingQuality: HIGH
     soundcloudSearchEnabled: true
+    
     sources:
       bandcamp: true
       http: true
@@ -46,11 +53,12 @@ lavalink:
       twitch: true
       vimeo: true
       youtube: false
+    
     timeouts:
-      connectTimeoutMs: 3000
-      connectionRequestTimeoutMs: 3000
-      socketTimeoutMs: 3000
-    trackStuckThresholdMs: 15000  # ✅ INCREASED from 10000
+      connectTimeoutMs: 10000       # 10 second connect timeout
+      connectionRequestTimeoutMs: 10000
+      socketTimeoutMs: 30000        # 30 second socket timeout
+    
     useSeekGhosting: true
     youtubePlaylistLoadLimit: 6
     youtubeSearchEnabled: true
@@ -59,8 +67,8 @@ logging:
   file:
     path: ./logs/
   level:
-    lavalink: DEBUG
-    com.sedmelluq.lava: DEBUG
+    lavalink: INFO
+    com.sedmelluq.lava: INFO
     dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
     root: INFO
   logback:
@@ -138,7 +146,7 @@ plugins:
       refreshToken: ${YT_REFRESH_TOKEN}
       skipInitialization: false
     remotePot:
-      url: "http://127.0.0.1:8080"  # ✅ CHANGED: Fixed from 8091 to 8080
+      url: "http://127.0.0.1:8080"
     remoteCipher:
       url: "https://cipher.kikkia.dev/"
 
