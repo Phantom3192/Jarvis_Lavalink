@@ -10,18 +10,14 @@
 #
 # Requires: curl, jq, grep -P (GNU grep)
 
-BGUTIL_POT_URL="http://127.0.0.1:4416/get_pot"
+BGUTIL_POT_URL="http://127.0.0.1:8080/get_pot"  # ✅ CHANGED: Fixed port from 4416 to 8080
 LAVALINK_BASE_URL="${LAVALINK_BASE_URL:-http://127.0.0.1:26169}"
-LAVALINK_PASSWORD="${LAVALINK_PASSWORD:?Set LAVALINK_PASSWORD in the environment}"
+LAVALINK_PASSWORD="${LAVALINK_PASSWORD:-your-strong-password-here}"  # ✅ CHANGED: Added default
 
-set -uo pipefail   # NOTE: deliberately NOT using -e here — every step
-                    # below checks its own result and prints a clear
-                    # message, so we don't want a single failed
-                    # command to kill the script silently.
+set -uo pipefail
 
 # --------------------------------------------------------------------
-# 0. Dependency check — this is the #1 suspect for a silent failure
-#    on a stripped-down container image.
+# 0. Dependency check
 # --------------------------------------------------------------------
 
 for bin in curl jq grep; do
@@ -83,8 +79,7 @@ fi
 echo "ℹ️  Got poToken (${#po_token} chars)."
 
 # --------------------------------------------------------------------
-# 3. Push into Lavalink. Try the unversioned path first (per
-#    youtube-source's own README), fall back to /v4 if that 404s.
+# 3. Push into Lavalink.
 # --------------------------------------------------------------------
 
 update_payload="$(jq -n --arg pot "$po_token" --arg vd "$visitor_data" \
