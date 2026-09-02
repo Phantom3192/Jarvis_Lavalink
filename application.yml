@@ -34,7 +34,7 @@ lavalink:
       soundcloud: false
       twitch: true
       vimeo: true
-      youtube: true
+      youtube: false
     timeouts:
       connectTimeoutMs: 3000
       connectionRequestTimeoutMs: 3000
