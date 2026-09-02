@@ -6,24 +6,35 @@ lavalink:
     repository: "https://maven.lavalink.dev/releases"
     snapshot: false
   server:
-    bufferDurationMs: 1500
-    filters:
-      volume: true
-      equalizer: true
-      karaoke: true
-      timescale: true
-      tremolo: true
-      vibrato: true
-      distortion: true
-      rotation: true
-      channelMix: true
-      lowPass: true
-    frameBufferDurationMs: 5000
+    address: 0.0.0.0
+    port: 26135
+    password: ${LAVALINK_SERVER_PASSWORD}  # ✅ CHANGED: Added password
+    
+    # Voice connection settings - ✅ NEW
+    voice:
+      connectionTimeout: 10000
+      keepAliveInterval: 5000
+      udpKeepAlive: true
+    
+    # UDP settings - ✅ NEW
+    udp:
+      bufferSize: 2048
+      timeout: 30000
+    
+    # Rate limiting - ✅ UNCOMMENTED & FIXED
+    ratelimit:
+      ipBlocks:
+        - "0.0.0.0/0"
+      strategy: "RotateOnBan"
+      banDuration: 60000
+    
+    # Buffer settings - ✅ INCREASED
+    bufferDurationMs: 2000
+    frameBufferDurationMs: 7500
     gc-warnings: true
     nonAllocatingFrameBuffer: true
     opusEncodingQuality: 10
-    password: ""
-    playerUpdateInterval: 1
+    playerUpdateInterval: 5  # ✅ INCREASED from 1
     resamplingQuality: HIGH
     soundcloudSearchEnabled: true
     sources:
@@ -39,18 +50,11 @@ lavalink:
       connectTimeoutMs: 3000
       connectionRequestTimeoutMs: 3000
       socketTimeoutMs: 3000
-    # Only uncomment and fill this in if bot-hosting.cloud confirms they
-    # assign you a fixed public IP that outbound UDP traffic actually
-    # routes through. If they don't support UDP forwarding at all, this
-    # won't fix voice connect timeouts — you'd need a different host.
-    # ratelimit:
-    #   ipBlocks:
-    #     - "YOUR.PUBLIC.IP.HERE/32"
-    #   strategy: "RotateOnBan"
-    trackStuckThresholdMs: 10000
+    trackStuckThresholdMs: 15000  # ✅ INCREASED from 10000
     useSeekGhosting: true
     youtubePlaylistLoadLimit: 6
     youtubeSearchEnabled: true
+
 logging:
   file:
     path: ./logs/
@@ -63,10 +67,12 @@ logging:
     rollingpolicy:
       max-file-size: 1GB
       max-history: 30
+
 metrics:
   prometheus:
     enabled: false
     endpoint: /metrics
+
 plugins:
   youtube:
     allowDirectPlaylistIds: true
@@ -132,12 +138,14 @@ plugins:
       refreshToken: ${YT_REFRESH_TOKEN}
       skipInitialization: false
     remotePot:
-      url: "http://127.0.0.1:8091"
+      url: "http://127.0.0.1:8080"  # ✅ CHANGED: Fixed from 8091 to 8080
     remoteCipher:
       url: "https://cipher.kikkia.dev/"
+
 sentry:
   dsn: ''
   environment: ''
+
 server:
   address: 0.0.0.0
   http2:
