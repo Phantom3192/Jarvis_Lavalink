@@ -81,22 +81,21 @@ if [ ! -f Lavalink.jar ]; then
 fi
 
 # Raise the open-file-descriptor limit
-ulimit -n 65536 2>/dev/null || echo "ℹ️  Could not raise ulimit -n (may need host/panel-level config instead)."
+ulimit -n 65536 2>/dev/null || echo "ℹ️  Could not raise ulimit -n"
 
-# ✅ NEW: Function to check if webpo-generator is running
+# Check webpo-generator
 check_webpo() {
   curl -s -m 2 http://127.0.0.1:8080/health >/dev/null 2>&1
   return $?
 }
 
-# Start webpo-generator in the background with auto-restart - ✅ IMPROVED
+# Start webpo-generator with auto-restart
 if [ ! -d ./webpo-generator ]; then
   echo "Cloning webpo-generator..."
   git clone https://github.com/ashton045/webpo-generator.git ./webpo-generator
   (cd ./webpo-generator && npm i)
 fi
 
-# ✅ CHANGED: Webpo-generator with auto-restart loop
 (
   while true; do
     echo "Starting webpo-generator..."
@@ -106,19 +105,11 @@ fi
   done
 ) &
 
-# Wait for webpo-generator to start
-echo "Waiting for webpo-generator to start..."
 sleep 5
 if check_webpo; then
   echo "✅ webpo-generator is running on port 8080"
 else
-  echo "⚠️  webpo-generator may not have started properly, checking again in 10 seconds..."
-  sleep 10
-  if check_webpo; then
-    echo "✅ webpo-generator is running on port 8080"
-  else
-    echo "❌ webpo-generator failed to start! Check logs above."
-  fi
+  echo "⚠️  webpo-generator may not have started properly..."
 fi
 
 # Background network diagnostic
@@ -136,42 +127,43 @@ fi
   done
 ) &
 
-# ✅ NEW: UDP health check
-(
-  while true; do
-    if nc -vz 127.0.0.1 26135 2>/dev/null; then
-      echo "$(date +"%Y-%m-%dT%H:%M:%S%z"): Lavalink UDP OK" >> lavalink_health.log
-    else
-      echo "$(date +"%Y-%m-%dT%H:%M:%S%z"): Lavalink UDP DOWN!" >> lavalink_health.log
-    fi
-    sleep 30
-  done
-) &
-
-# Start Lavalink with automatic restart
+# ===== SUPER PERSISTENT LAVALINK LOOP =====
 LAVALINK_RUNNING=1
 trap 'LAVALINK_RUNNING=0; kill $(jobs -p) 2>/dev/null; exit 0' INT TERM
 
 RESTART_COUNT=0
 while [ "$LAVALINK_RUNNING" = "1" ]; do
-  # ✅ CHANGED: Added Xms for pre-allocation
-  java -Xms2048m -Xmx${LAVALINK_HEAP:-3500m} -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -jar Lavalink.jar &
+  # Start with increased heap
+  java -Xms2048m -Xmx${LAVALINK_HEAP:-4096m} \
+    -XX:+UseG1GC \
+    -XX:MaxGCPauseMillis=100 \
+    -XX:+UseStringDeduplication \
+    -XX:+UseContainerSupport \
+    -jar Lavalink.jar &
+  
   LAVALINK_PID=$!
+  
+  # Wait and capture exit code
   wait $LAVALINK_PID
   EXIT_CODE=$?
 
   if [ "$LAVALINK_RUNNING" = "0" ]; then
+    echo "Lavalink stopped gracefully."
     break
   fi
 
   RESTART_COUNT=$((RESTART_COUNT + 1))
-  echo "⚠️  Lavalink exited (code $EXIT_CODE, restart #$RESTART_COUNT) — likely OOM-killed by the host if no error was printed above."
-
-  if [ "$RESTART_COUNT" -ge 5 ]; then
-    echo "❌ Lavalink has crashed 5 times in a row — backing off 60s to avoid a restart loop. Check LAVALINK_HEAP / host memory limit."
+  echo "⚠️  Lavalink exited with code $EXIT_CODE (restart #$RESTART_COUNT)"
+  
+  # Exponential backoff for restarts
+  if [ "$RESTART_COUNT" -ge 10 ]; then
+    echo "⚠️  Lavalink crashed 10 times, waiting 60 seconds..."
     sleep 60
     RESTART_COUNT=0
+  elif [ "$RESTART_COUNT" -ge 5 ]; then
+    echo "⚠️  Lavalink crashed 5 times, waiting 15 seconds..."
+    sleep 15
   else
-    sleep 5
+    sleep 3
   fi
 done
