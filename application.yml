@@ -142,4 +142,4 @@ server:
   address: 0.0.0.0
   http2:
     enabled: false
-  port: 2333
+  port: 26135
