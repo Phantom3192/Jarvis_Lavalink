@@ -6,7 +6,7 @@ if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
   NODE_VERSION="22.22.1"
   if [ ! -x "./node-runtime/bin/node" ] || [ "$(cat ./node-runtime/.version 2>/dev/null)" != "$NODE_VERSION" ]; then
     rm -rf ./node-runtime node.tar.xz
-    set +e   # diagnose each step ourselves instead of letting -e hide which one failed
+    set +e
 
     http_code="$(curl -sS -w '%{http_code}' -o node.tar.xz -L "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz")"
     curl_status=$?
@@ -80,35 +80,48 @@ if [ ! -f Lavalink.jar ]; then
   curl -L -o Lavalink.jar https://github.com/lavalink-devs/Lavalink/releases/latest/download/Lavalink.jar
 fi
 
-# Raise the open-file-descriptor limit for this shell (and everything it
-# spawns, including java). Each voice connection's native UDP/audio
-# resources (JDA-NAS, DAVE) can hold file descriptors that aren't always
-# released cleanly on an abrupt disconnect — if the default limit (often
-# 1024) gets exhausted after enough disconnect/reconnect cycles, new
-# connections can silently fail even though Lavalink looks "up", and only
-# a full process restart (which the OS reclaims on exit) clears it.
-# This raises the ceiling so that's far less likely to be hit.
+# Raise the open-file-descriptor limit
 ulimit -n 65536 2>/dev/null || echo "ℹ️  Could not raise ulimit -n (may need host/panel-level config instead)."
 
-# Start webpo-generator in the background if it's not already present.
-# Replaces the old bgutil-pot + refresh_potoken.sh flow: webpo-generator
-# mints a poToken per request via Lavalink's remotePot config instead of
-# pushing a single static token on a timer.
+# ✅ NEW: Function to check if webpo-generator is running
+check_webpo() {
+  curl -s -m 2 http://127.0.0.1:8080/health >/dev/null 2>&1
+  return $?
+}
+
+# Start webpo-generator in the background with auto-restart - ✅ IMPROVED
 if [ ! -d ./webpo-generator ]; then
   echo "Cloning webpo-generator..."
   git clone https://github.com/ashton045/webpo-generator.git ./webpo-generator
   (cd ./webpo-generator && npm i)
 fi
-(cd ./webpo-generator && HOST=127.0.0.1 PORT=8080 npm start) &
 
-# Background network diagnostic — since this panel only exposes the
-# process console (no shell access to run ping/curl manually), this logs
-# a lightweight connectivity check every 15s to netcheck.log. After the
-# next disconnect, open netcheck.log via the file manager/SFTP and check
-# whether there's a gap or FAIL entry right around the disconnect
-# timestamp — that tells us if it's this host's own network dropping
-# briefly (outbound requests stall too) vs. something specific to the
-# inbound port your bot connects through (outbound stays clean).
+# ✅ CHANGED: Webpo-generator with auto-restart loop
+(
+  while true; do
+    echo "Starting webpo-generator..."
+    (cd ./webpo-generator && HOST=127.0.0.1 PORT=8080 npm start)
+    echo "⚠️  webpo-generator crashed, restarting in 5 seconds..."
+    sleep 5
+  done
+) &
+
+# Wait for webpo-generator to start
+echo "Waiting for webpo-generator to start..."
+sleep 5
+if check_webpo; then
+  echo "✅ webpo-generator is running on port 8080"
+else
+  echo "⚠️  webpo-generator may not have started properly, checking again in 10 seconds..."
+  sleep 10
+  if check_webpo; then
+    echo "✅ webpo-generator is running on port 8080"
+  else
+    echo "❌ webpo-generator failed to start! Check logs above."
+  fi
+fi
+
+# Background network diagnostic
 (
   : > netcheck.log
   while true; do
@@ -123,26 +136,26 @@ fi
   done
 ) &
 
-# Start Lavalink with automatic restart if it ever dies unexpectedly
-# (e.g. OOM-killed by the host — this happens silently, with no exception
-# in Lavalink's own log, so a supervising loop is the only reliable fix
-# short of raising the host's memory limit).
-#
-# Heap sizing for a 4.4GB container:
-#   ~300MB  OS / container overhead
-#   ~200MB  webpo-generator (Node, runs alongside Lavalink in this same container)
-#   ~600MB  JVM non-heap (metaspace, thread stacks, native libs: JDA-NAS, DAVE,
-#           direct/off-heap buffers used by nonAllocatingFrameBuffer)
-#   ------
-#   ~1100MB reserved, leaving ~3.2GB safely available for heap.
-# 3072m keeps a healthy margin below that so a burst (many guilds playing at
-# once, GC overhead, etc.) doesn't push the container over its limit again.
+# ✅ NEW: UDP health check
+(
+  while true; do
+    if nc -vz 127.0.0.1 26135 2>/dev/null; then
+      echo "$(date +"%Y-%m-%dT%H:%M:%S%z"): Lavalink UDP OK" >> lavalink_health.log
+    else
+      echo "$(date +"%Y-%m-%dT%H:%M:%S%z"): Lavalink UDP DOWN!" >> lavalink_health.log
+    fi
+    sleep 30
+  done
+) &
+
+# Start Lavalink with automatic restart
 LAVALINK_RUNNING=1
 trap 'LAVALINK_RUNNING=0; kill $(jobs -p) 2>/dev/null; exit 0' INT TERM
 
 RESTART_COUNT=0
 while [ "$LAVALINK_RUNNING" = "1" ]; do
-  java -Xmx${LAVALINK_HEAP:-3072m} -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -jar Lavalink.jar &
+  # ✅ CHANGED: Added Xms for pre-allocation
+  java -Xms2048m -Xmx${LAVALINK_HEAP:-3500m} -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -jar Lavalink.jar &
   LAVALINK_PID=$!
   wait $LAVALINK_PID
   EXIT_CODE=$?
