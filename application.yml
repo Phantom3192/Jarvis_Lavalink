@@ -22,11 +22,11 @@ lavalink:
       timeout: 30000
     
     # Rate limiting - ✅ UNCOMMENTED & FIXED
-    ratelimit:
-      ipBlocks:
-        - "0.0.0.0/0"
-      strategy: "RotateOnBan"
-      banDuration: 60000
+    # ratelimit:
+    #   ipBlocks:
+    #     - "0.0.0.0/0"
+    #   strategy: "RotateOnBan"
+    #   banDuration: 60000
     
     # Buffer settings - ✅ INCREASED
     bufferDurationMs: 2000
