@@ -129,14 +129,7 @@ plugins:
     enabled: true
     oauth:
       enabled: true
-      # First run: leave this commented out so the key is completely absent.
-      # If it's set to an empty string (e.g. via an env var that exists but
-      # is blank), youtube-source will try to redeem "" as a token and fail
-      # with "Invalid status code for oauth2 token fetch: 400" instead of
-      # starting the interactive device-code flow.
-      # Once you have a real token from the console output, uncomment this
-      # and set YT_REFRESH_TOKEN in your panel (make sure it's non-empty).
-      # refreshToken: ${YT_REFRESH_TOKEN}
+      refreshToken: ${YT_REFRESH_TOKEN}
       skipInitialization: false
     remotePot:
       url: "http://127.0.0.1:8091"
