@@ -130,7 +130,7 @@ plugins:
     oauth:
       enabled: true
       refreshToken: ${YT_REFRESH_TOKEN}
-      skipInitialization: true
+      skipInitialization: false
     remotePot:
       url: "http://127.0.0.1:8091"
     remoteCipher:
