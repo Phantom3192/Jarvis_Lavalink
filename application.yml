@@ -40,8 +40,8 @@ lavalink:
     frameBufferDurationMs: 7500
     gc-warnings: true
     nonAllocatingFrameBuffer: true
-    opusEncodingQuality: 10
-    resamplingQuality: HIGH
+    opusEncodingQuality: 8
+    resamplingQuality: MEDIUM
     soundcloudSearchEnabled: true
     
     sources:
