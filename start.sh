@@ -134,7 +134,7 @@ trap 'LAVALINK_RUNNING=0; kill $(jobs -p) 2>/dev/null; exit 0' INT TERM
 RESTART_COUNT=0
 while [ "$LAVALINK_RUNNING" = "1" ]; do
   # Start with increased heap
-  java -Xms2048m -Xmx${LAVALINK_HEAP:-4096m} \
+  java -Xms2048m -Xmx${LAVALINK_HEAP:-3072m} \
     -XX:+UseG1GC \
     -XX:MaxGCPauseMillis=100 \
     -XX:+UseStringDeduplication \
