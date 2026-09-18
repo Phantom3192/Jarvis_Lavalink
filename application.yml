@@ -36,8 +36,8 @@ lavalink:
     trackStuckThresholdMs: 30000    # 30 seconds before track is stuck
     
     # Buffer settings
-    bufferDurationMs: 2000
-    frameBufferDurationMs: 7500
+    bufferDurationMs: 600
+    frameBufferDurationMs: 5000
     gc-warnings: true
     nonAllocatingFrameBuffer: true
     opusEncodingQuality: 8
