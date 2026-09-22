@@ -1,7 +1,5 @@
 lavalink:
   plugins:
-  - dependency: "dev.lavalink.youtube:youtube-plugin:42cc5a2042f31dba3fdc523618ef380a1a8bb79d"
-    snapshot: true
   - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
     repository: "https://maven.lavalink.dev/releases"
     snapshot: false
