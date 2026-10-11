@@ -131,22 +131,26 @@ plugins:
         searching: false
         videoLoading: true
     clients:
-    - MUSIC
-    - ANDROID_VR
     - WEB
     - MWEB
-    - ANDROID_MUSIC
-    - TVHTML5_SIMPLY
     - TV
+    - TVHTML5_SIMPLY
+    - ANDROID_MUSIC
+    - IOS
+    - WEBEMBEDDED
+    - MUSIC
+    - ANDROID_VR
     enabled: true
     oauth:
       enabled: true
       refreshToken: ${YT_REFRESH_TOKEN}
       skipInitialization: false
     remotePot:
-      url: "http://127.0.0.1:8080"
+      url: "https://pot.ashtongg.me"
+      # previous local PO token server: "http://127.0.0.1:8080"
     remoteCipher:
       url: "https://cipher.kikkia.dev/"
+      userAgent: "Jarvis"
 
 sentry:
   dsn: ''
